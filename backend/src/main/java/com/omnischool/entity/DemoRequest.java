@@ -1,0 +1,92 @@
+package com.omnischool.entity;
+
+import com.omnischool.enums.DemoStatus;
+import com.omnischool.enums.EducationLevel;
+import com.omnischool.enums.SchoolType;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Demo request submitted from the public website.
+ */
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
+@Table(name = "demo_requests")
+public class DemoRequest {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String fullName;
+
+    @Column(nullable = false)
+    private String email;
+
+    private String phone;
+
+    @Column(nullable = false)
+    private String schoolName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private SchoolType schoolType;
+
+    private Integer numberOfStudents;
+
+    @Enumerated(EnumType.STRING)
+    private EducationLevel level;
+
+    private String currentSystem;
+
+    private LocalDate preferredDate;
+
+    private String preferredTime;
+
+    @ElementCollection
+    @CollectionTable(name = "demo_request_interests", joinColumns = @JoinColumn(name = "demo_request_id"))
+    @Column(name = "interest")
+    @Builder.Default
+    private List<String> interestedIn = new ArrayList<>();
+
+    @Column(length = 2000)
+    private String message;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private DemoStatus status = DemoStatus.PENDING;
+
+    private String assignedTo;
+
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
+
+    private LocalDateTime scheduledAt;
+
+    @PrePersist
+    void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+        if (status == null) status = DemoStatus.PENDING;
+    }
+
+    @PreUpdate
+    void onUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
+}
