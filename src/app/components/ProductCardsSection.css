@@ -1,0 +1,131 @@
+/* ProductCardsSection - structured, consistent media rendering */
+
+.os-product-section {
+	background: #f9f9f7;
+}
+
+.os-product-title {
+	font-family: Montserrat, sans-serif;
+	font-size: 36px;
+	font-weight: 700;
+	color: #333;
+	line-height: 1.2;
+	letter-spacing: -0.01em;
+	text-align: center;
+	margin-bottom: 48px;
+}
+
+.os-product-grid {
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 24px;
+}
+
+@media (min-width: 768px) {
+	.os-product-grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+.os-card {
+	background: #fff;
+	border: 1px solid #e5e7eb;
+	border-radius: 16px;
+	overflow: hidden;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.os-media {
+	position: relative;
+	/* Remove visible background behind screenshots */
+	background: transparent;
+	border-radius: 16px 16px 0 0;
+	aspect-ratio: 16 / 10;
+	overflow: hidden;
+}
+
+.os-mediaImage {
+	width: 100%;
+	height: 100%;
+	display: block;
+	object-fit: cover;
+	/* Add a subtle frame so the image feels structured */
+	border-bottom: 1px solid rgba(229, 231, 235, 0.9);
+}
+
+.os-mediaOverlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(180deg, rgba(0, 0, 0, 0.16) 0%, rgba(0, 0, 0, 0) 32%),
+		linear-gradient(0deg, rgba(0, 0, 0, 0.08) 0%, rgba(0, 0, 0, 0) 42%);
+	pointer-events: none;
+}
+
+/* If you want ZERO overlay, you can set display:none for this class. */
+
+.os-badge {
+	position: absolute;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 50px;
+	border-radius: 9999px;
+	background: rgba(255, 255, 255, 0.92);
+	box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.55);
+}
+
+.os-badgeIcon {
+	color: #2d472c;
+}
+
+.os-cardBody {
+	padding: 24px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	flex: 1;
+}
+
+.os-cardTitle {
+	font-family: Montserrat, sans-serif;
+	font-size: 20px;
+	font-weight: 700;
+	color: #333;
+}
+
+.os-cardDesc {
+	font-size: 14px;
+	color: #6b7280;
+	line-height: 1.6;
+}
+
+.os-cardFooter {
+	margin-top: auto;
+	padding-top: 16px;
+}
+
+.os-cardCta {
+	width: 100%;
+	height: 44px;
+	border-radius: 8px;
+	font-size: 14px;
+	font-weight: 600;
+	background: #2d472c;
+	color: #fff;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	transition: opacity 0.2s ease;
+}
+
+.os-cardCta:hover {
+	opacity: 0.9;
+}
