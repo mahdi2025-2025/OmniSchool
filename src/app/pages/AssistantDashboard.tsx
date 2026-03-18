@@ -47,8 +47,8 @@ export default function AssistantDashboard() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut' }}
             >
-              <div 
-                style={{ 
+              <div
+                style={{
                   fontFamily: 'Inter, sans-serif',
                   fontSize: '11px',
                   letterSpacing: '0.15em',
@@ -61,10 +61,10 @@ export default function AssistantDashboard() {
                 DASHBOARD ASSISTANT
               </div>
               <h1
-                style={{ 
-                  fontFamily: 'Montserrat, sans-serif', 
-                  fontSize: '48px', 
-                  fontWeight: '900', 
+                style={{
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontSize: '48px',
+                  fontWeight: '900',
                   color: '#333333',
                   lineHeight: '1.1',
                   marginBottom: '20px'
@@ -168,8 +168,8 @@ export default function AssistantDashboard() {
       <section id="assistant-features" className="py-24 px-6" style={{ backgroundColor: 'white' }}>
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-16">
-            <div 
-              style={{ 
+            <div
+              style={{
                 fontFamily: 'Inter, sans-serif',
                 fontSize: '11px',
                 letterSpacing: '0.15em',
@@ -182,10 +182,10 @@ export default function AssistantDashboard() {
               FONCTIONNALITÉS
             </div>
             <h2
-              style={{ 
-                fontFamily: 'Montserrat, sans-serif', 
-                fontSize: '32px', 
-                fontWeight: '700', 
+              style={{
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: '32px',
+                fontWeight: '700',
                 color: '#333333'
               }}
             >
@@ -228,8 +228,8 @@ export default function AssistantDashboard() {
       <section className="py-24 px-6" style={{ backgroundColor: '#F9F9F7' }}>
         <div className="max-w-[1280px] mx-auto">
           <div className="text-center mb-16">
-            <div 
-              style={{ 
+            <div
+              style={{
                 fontFamily: 'Inter, sans-serif',
                 fontSize: '11px',
                 letterSpacing: '0.15em',
@@ -242,10 +242,10 @@ export default function AssistantDashboard() {
               APERÇU
             </div>
             <h2
-              style={{ 
-                fontFamily: 'Montserrat, sans-serif', 
-                fontSize: '32px', 
-                fontWeight: '700', 
+              style={{
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: '32px',
+                fontWeight: '700',
                 color: '#333333'
               }}
             >
@@ -319,10 +319,10 @@ export default function AssistantDashboard() {
       <section className="py-24 px-6" style={{ backgroundColor: '#2D472C' }}>
         <div className="max-w-[1280px] mx-auto text-center">
           <h2
-            style={{ 
-              fontFamily: 'Montserrat, sans-serif', 
-              fontSize: '36px', 
-              fontWeight: '700', 
+            style={{
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: '36px',
+              fontWeight: '700',
               color: 'white',
               marginBottom: '16px'
             }}

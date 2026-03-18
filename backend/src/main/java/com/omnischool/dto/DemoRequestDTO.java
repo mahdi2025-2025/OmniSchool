@@ -61,5 +61,7 @@ public class DemoRequestDTO {
     private LocalDateTime updatedAt;
 
     private LocalDateTime scheduledAt;
-}
 
+    /** City of the school (from public booking form). */
+    private String city;
+}

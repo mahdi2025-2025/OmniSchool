@@ -6,9 +6,7 @@ import {
   Calendar,
   MessageSquare,
   TrendingUp,
-  TrendingDown,
   ArrowUp,
-  ArrowDown,
   Search,
   Eye as EyeIcon,
   CheckCircle,
@@ -27,9 +25,71 @@ import {
   YAxis,
   CartesianGrid,
   Tooltip,
-  Legend,
   ResponsiveContainer,
 } from 'recharts';
+import { apiGet, apiPut, API_BASE_URL } from '../lib/api';
+
+// --- Local mock datasets (fallback until backend endpoints exist) ---
+const trafficSourceData: Array<{ name: string; value: number; color: string }> = [
+  { name: 'Recherche', value: 45, color: '#2D472C' },
+  { name: 'Réseaux sociaux', value: 25, color: '#C5A059' },
+  { name: 'Direct', value: 20, color: '#6B7280' },
+  { name: 'Référents', value: 10, color: '#10B981' },
+];
+
+const ctaClickData: Array<{ name: string; clicks: number }> = [
+  { name: 'Demander une démo (Hero)', clicks: 128 },
+  { name: 'Réserver une démo (BookDemo)', clicks: 76 },
+  { name: 'Contacter (Footer)', clicks: 42 },
+  { name: 'Découvrir la solution', clicks: 63 },
+];
+
+const pagePerformance: Array<{
+  page: string;
+  vues: number;
+  visiteurs: number;
+  rebond: number;
+  temps: string;
+}> = [
+  { page: '/', vues: 3240, visiteurs: 2120, rebond: 42, temps: '02:14' },
+  { page: '/solution', vues: 1410, visiteurs: 980, rebond: 38, temps: '03:02' },
+  { page: '/book-demo', vues: 860, visiteurs: 650, rebond: 51, temps: '01:35' },
+  { page: '/contact', vues: 410, visiteurs: 330, rebond: 36, temps: '02:05' },
+];
+// --- End mock datasets ---
+
+// type DailyTrendDTO = { date: string; requests: number; conversions: number };
+
+type DashboardStatsDTO = {
+  totalDemoRequests: number;
+  pendingRequests: number;
+  completedRequests: number;
+  conversionRate: number;
+  dailyTrends: Array<{ date: string; requests: number; conversions: number }>;
+  requestsByStatus: Record<string, number>;
+};
+
+type DemoRequestDTO = {
+  id: number;
+  createdAt?: string;
+  fullName: string;
+  email: string;
+  phone?: string;
+  schoolName: string;
+  city?: string;
+  numberOfStudents?: number;
+  interestedIn?: string[];
+  status: string;
+  message?: string;
+};
+
+type PageResponse<T> = {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number;
+  size: number;
+};
 
 // Helper function to generate data based on period
 const generateDataForPeriod = (period: string, startDate?: string, endDate?: string) => {
@@ -161,6 +221,39 @@ const generateDataForPeriod = (period: string, startDate?: string, endDate?: str
   return { visitorData, kpiData };
 };
 
+const formatDateTime = (value?: string) => {
+  if (!value) return '';
+  const d = new Date(value);
+  if (Number.isNaN(d.getTime())) return value;
+  return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
+};
+
+const statusColor = (status: string) => {
+  switch (status) {
+    case 'PENDING':
+      return '#C5A059';
+    case 'NO_RESPONSE':
+      return '#6B7280';
+    case 'SCHEDULED':
+      return '#3B82F6';
+    default:
+      return '#6B7280';
+  }
+};
+
+const statusLabelFr = (status: string) => {
+  switch (status) {
+    case 'PENDING':
+      return 'En attente';
+    case 'NO_RESPONSE':
+      return 'Non répondu';
+    case 'SCHEDULED':
+      return 'Démo planifiée';
+    default:
+      return status;
+  }
+};
+
 export default function AdminAnalytics() {
   const navigate = useNavigate();
   const [activeDateFilter, setActiveDateFilter] = useState('7 derniers jours');
@@ -179,13 +272,35 @@ export default function AdminAnalytics() {
   const demoTableRef = useRef<HTMLDivElement>(null);
   const pageTableRef = useRef<HTMLDivElement>(null);
 
-  // Generate initial data
+  // Replace mock data with backend-connected state
+  const [dashboardStats, setDashboardStats] = useState<DashboardStatsDTO | null>(null);
+  const [demoRequests, setDemoRequests] = useState<DemoRequestDTO[]>([]);
+  const [loadingStats, setLoadingStats] = useState(false);
+  const [loadingRequests, setLoadingRequests] = useState(false);
+  const [apiError, setApiError] = useState<string | null>(null);
+
+  // Generate initial data (used as fallback)
   const [currentData, setCurrentData] = useState(() => generateDataForPeriod('7 derniers jours'));
 
   // Check authentication
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem('adminLoggedIn');
-    if (!isLoggedIn) {
+    const token = localStorage.getItem('accessToken');
+    const adminFlag = localStorage.getItem('adminLoggedIn');
+    const userRaw = localStorage.getItem('currentUser');
+
+    let role: string | undefined;
+    try {
+      role = userRaw ? (JSON.parse(userRaw) as { role?: string }).role : undefined;
+    } catch {
+      role = undefined;
+    }
+
+    // Require both a JWT token and ADMIN role.
+    if (!token || !adminFlag || role !== 'ADMIN') {
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      localStorage.removeItem('currentUser');
+      localStorage.removeItem('adminLoggedIn');
       navigate('/admin/login');
     }
   }, [navigate]);
@@ -199,130 +314,140 @@ export default function AdminAnalytics() {
   }, [toast]);
 
   const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('currentUser');
     localStorage.removeItem('adminLoggedIn');
     navigate('/admin/login');
   };
 
+  const buildDateParams = () => {
+    if (customStartDate && customEndDate && !activeDateFilter) {
+      return `?startDate=${customStartDate}&endDate=${customEndDate}`;
+    }
+    // For preset filters, let backend default range when params are missing.
+    return '';
+  };
+
+  const loadDashboard = async () => {
+    try {
+      setApiError(null);
+      setLoadingStats(true);
+      const stats = await apiGet<DashboardStatsDTO>(`/api/analytics/dashboard${buildDateParams()}`);
+      setDashboardStats(stats);
+
+      // Map backend daily trends into the chart format this page expects.
+      const visitorData = (stats.dailyTrends ?? []).map((t) => {
+        // keep label short: yyyy-MM-dd -> dd/MM
+        const d = new Date(t.date);
+        const label = Number.isNaN(d.getTime())
+          ? t.date
+          : `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}`;
+
+        return {
+          date: label,
+          visiteurs: t.requests,
+          pages: t.requests, // no page views tracking yet
+          demos: t.requests,
+        };
+      });
+
+      const kpiData = {
+        visitors: stats.totalDemoRequests,
+        visitorsTrend: 0,
+        pages: stats.totalDemoRequests,
+        pagesTrend: 0,
+        demos: stats.totalDemoRequests,
+        demosTrend: 0,
+        messages: 0,
+        messagesTrend: 0,
+        conversion: `${(stats.conversionRate ?? 0).toFixed(1)}%`,
+        conversionTrend: 0,
+      };
+
+      setCurrentData({ visitorData, kpiData });
+    } catch (e) {
+      setApiError(e instanceof Error ? e.message : 'Erreur API');
+    } finally {
+      setLoadingStats(false);
+    }
+  };
+
+  const loadDemoRequests = async () => {
+    try {
+      setApiError(null);
+      setLoadingRequests(true);
+      const url = new URL(`${API_BASE_URL}/api/demo/requests`);
+      url.searchParams.set('page', '0');
+      url.searchParams.set('size', '10');
+      if (searchQuery) url.searchParams.set('search', searchQuery);
+      // status filter not wired in UI yet
+
+      const res = await fetch(url.toString(), {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken') ?? ''}`,
+        },
+      });
+      if (!res.ok) throw new Error(`Request failed (${res.status})`);
+      const page = (await res.json()) as PageResponse<DemoRequestDTO>;
+      setDemoRequests(page.content ?? []);
+    } catch (e) {
+      setApiError(e instanceof Error ? e.message : 'Erreur API');
+    } finally {
+      setLoadingRequests(false);
+    }
+  };
+
+  // Initial load
+  useEffect(() => {
+    loadDashboard();
+    loadDemoRequests();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Reload table on search
+  useEffect(() => {
+    const t = setTimeout(() => {
+      loadDemoRequests();
+    }, 300);
+    return () => clearTimeout(t);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchQuery]);
+
+  // Hook date filter apply to reload dashboard
   const handleDateFilterChange = (filter: string) => {
     setActiveDateFilter(filter);
     setDateRangeLabel('');
-    const newData = generateDataForPeriod(filter);
-    setCurrentData(newData);
+    // keep existing UI behavior but reload backend stats
+    setCurrentData(generateDataForPeriod(filter));
+    loadDashboard();
   };
 
   const handleApplyCustomRange = () => {
     if (customStartDate && customEndDate) {
       setActiveDateFilter('');
       setDateRangeLabel(`${customStartDate} — ${customEndDate}`);
-      const newData = generateDataForPeriod('custom', customStartDate, customEndDate);
-      setCurrentData(newData);
+      loadDashboard();
     }
   };
 
-  const handleDemoStatusToggle = (index: number) => {
-    const statuses = [
-      { name: 'En attente', color: '#C5A059' },
-      { name: 'Contacté', color: '#2D472C' },
-      { name: 'Démo planifiée', color: '#3B82F6' },
-      { name: 'Non répondu', color: '#EF4444' },
-    ];
-    
-    const currentStatusIndex = statuses.findIndex(s => s.name === demoRequests[index].status);
-    const nextStatusIndex = (currentStatusIndex + 1) % statuses.length;
-    
-    demoRequests[index].status = statuses[nextStatusIndex].name;
-    demoRequests[index].statusColor = statuses[nextStatusIndex].color;
-    
-    setToast('Statut mis à jour');
-    // Force re-render
-    setCurrentData({ ...currentData });
+  // Disable mock toggling: update real backend status instead
+  const handleDemoStatusToggle = async (index: number) => {
+    try {
+      const item = demoRequests[index];
+      if (!item) return;
+      const statuses = ['PENDING', 'NO_RESPONSE', 'SCHEDULED'];
+      const currentIdx = Math.max(0, statuses.indexOf(item.status));
+      const next = statuses[(currentIdx + 1) % statuses.length];
+
+      await apiPut<DemoRequestDTO>(`/api/demo/requests/${item.id}/status?status=${next}`);
+      setToast('Statut mis à jour');
+      await loadDashboard();
+      await loadDemoRequests();
+    } catch {
+      setToast('Erreur de mise à jour');
+    }
   };
-
-  const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
-    ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
-
-  const trafficSourceData = [
-    { name: 'Direct', value: 42, color: '#2D472C', id: 'traffic-direct' },
-    { name: 'Google', value: 31, color: '#C5A059', id: 'traffic-google' },
-    { name: 'Réseaux Sociaux', value: 18, color: '#6B7280', id: 'traffic-social' },
-    { name: 'Autres', value: 9, color: '#D1D5DB', id: 'traffic-other' },
-  ];
-
-  const ctaClickData = [
-    { name: 'Réserver une Démo (Hero)', clicks: 284 },
-    { name: 'Réserver une Démo (Solution)', clicks: 167 },
-    { name: 'Découvrir la Solution', clicks: 203 },
-    { name: 'Contacter les Ventes', clicks: 89 },
-    { name: 'Réserver une Démo (Contact)', clicks: 134 },
-    { name: 'Voir les Fonctionnalités', clicks: 112 },
-  ];
-
-  const [demoRequests, setDemoRequests] = useState([
-    {
-      date: '05/03/2026',
-      nom: 'Mohamed Karim',
-      ecole: 'École Les Oliviers',
-      ville: 'Tunis',
-      eleves: '200-400',
-      apps: 'Dashboard + App Parent',
-      status: 'En attente',
-      statusColor: '#C5A059',
-      message: 'Nous souhaitons moderniser notre système de gestion.',
-    },
-    {
-      date: '04/03/2026',
-      nom: 'Sarra Jebali',
-      ecole: 'Institut Avenir',
-      ville: 'Sfax',
-      eleves: '100-200',
-      apps: 'Tous',
-      status: 'Contacté',
-      statusColor: '#2D472C',
-      message: 'Intéressée par toutes les applications disponibles.',
-    },
-    {
-      date: '03/03/2026',
-      nom: 'Amine Trabelsi',
-      ecole: 'École El Amal',
-      ville: 'Sousse',
-      eleves: '<100',
-      apps: 'App Enseignant',
-      status: 'Démo planifiée',
-      statusColor: '#3B82F6',
-      message: 'Besoin urgent pour la gestion des notes.',
-    },
-    {
-      date: '02/03/2026',
-      nom: 'Fatma Bouaziz',
-      ecole: 'Collège Privé',
-      ville: 'Tunis',
-      eleves: '200-400',
-      apps: 'Dashboard Assistant',
-      status: 'Non répondu',
-      statusColor: '#EF4444',
-      message: 'Souhaitons améliorer la communication interne.',
-    },
-    {
-      date: '01/03/2026',
-      nom: 'Yassine Mejri',
-      ecole: 'École Carthage',
-      ville: 'Bizerte',
-      eleves: '100-200',
-      apps: 'App Parent',
-      status: 'En attente',
-      statusColor: '#C5A059',
-      message: 'Les parents demandent plus de transparence.',
-    },
-  ]);
-
-  const pagePerformance = [
-    { page: 'Accueil (/)', vues: '2,341', visiteurs: '1,102', rebond: 42, temps: '2m 14s' },
-    { page: 'Solution (/solution)', vues: '891', visiteurs: '654', rebond: 38, temps: '3m 05s' },
-    { page: 'Applications (/app/teacher)', vues: '445', visiteurs: '312', rebond: 51, temps: '1m 48s' },
-    { page: 'À propos (/about)', vues: '334', visiteurs: '289', rebond: 44, temps: '2m 32s' },
-    { page: 'Réserver une Démo (/book-demo)', vues: '623', visiteurs: '487', rebond: 28, temps: '4m 11s' },
-  ];
 
   const getBounceColor = (rate: number) => {
     if (rate < 40) return '#10B981';
@@ -330,15 +455,7 @@ export default function AdminAnalytics() {
     return '#EF4444';
   };
 
-  // Filter demo requests based on search
-  const filteredDemoRequests = demoRequests.filter(request => {
-    const query = searchQuery.toLowerCase();
-    return (
-      request.nom.toLowerCase().includes(query) ||
-      request.ecole.toLowerCase().includes(query) ||
-      request.ville.toLowerCase().includes(query)
-    );
-  });
+  const filteredDemoRequests = demoRequests;
 
   const getLineColor = () => {
     if (activeChartTab === 'Visiteurs') return '#2D472C';
@@ -1064,30 +1181,42 @@ export default function AdminAnalytics() {
                       onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#F9FAFB')}
                       onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'white')}
                     >
-                      <td style={{ padding: '12px', fontSize: '13px', color: '#333333' }}>{request.date}</td>
+                      <td style={{ padding: '12px', fontSize: '13px', color: '#333333' }}>{formatDateTime(request.createdAt)}</td>
                       <td style={{ padding: '12px', fontSize: '13px', color: '#333333', fontWeight: '500' }}>
-                        {request.nom}
+                        {request.fullName}
                       </td>
-                      <td style={{ padding: '12px', fontSize: '13px', color: '#6B7280' }}>{request.ecole}</td>
-                      <td style={{ padding: '12px', fontSize: '13px', color: '#6B7280' }}>{request.ville}</td>
-                      <td style={{ padding: '12px', fontSize: '13px', color: '#6B7280' }}>{request.eleves}</td>
-                      <td style={{ padding: '12px', fontSize: '13px', color: '#6B7280' }}>{request.apps}</td>
+                      <td style={{ padding: '12px', fontSize: '13px', color: '#6B7280' }}>{request.schoolName}</td>
+                      <td style={{ padding: '12px', fontSize: '13px', color: '#6B7280' }}>{request.city ?? ''}</td>
+                      <td style={{ padding: '12px', fontSize: '13px', color: '#6B7280' }}>{request.numberOfStudents ?? ''}</td>
+                      <td style={{ padding: '12px', fontSize: '13px', color: '#6B7280' }}>{(request.interestedIn ?? []).join(', ')}</td>
                       <td style={{ padding: '12px' }}>
-                        <span
-                          onClick={() => handleDemoStatusToggle(index)}
+                        <select
+                          value={request.status}
+                          onChange={async (e) => {
+                            const next = e.target.value;
+                            const idx = demoRequests.findIndex((r) => r.id === request.id);
+                            if (idx >= 0) {
+                              await apiPut<DemoRequestDTO>(`/api/demo/requests/${request.id}/status?status=${next}`);
+                              setToast('Statut mis à jour');
+                              await loadDashboard();
+                              await loadDemoRequests();
+                            }
+                          }}
                           style={{
-                            backgroundColor: request.statusColor,
-                            color: 'white',
-                            fontSize: '11px',
-                            fontWeight: '600',
-                            padding: '4px 10px',
+                            border: '1px solid #E5E7EB',
                             borderRadius: '999px',
-                            whiteSpace: 'nowrap',
+                            padding: '6px 10px',
+                            fontSize: '12px',
+                            fontWeight: '600',
+                            backgroundColor: statusColor(request.status),
+                            color: 'white',
                             cursor: 'pointer',
                           }}
                         >
-                          {request.status}
-                        </span>
+                          <option value="PENDING">En attente</option>
+                          <option value="NO_RESPONSE">Non répondu</option>
+                          <option value="SCHEDULED">Démo planifiée</option>
+                        </select>
                       </td>
                       <td style={{ padding: '12px' }}>
                         <div style={{ display: 'flex', gap: '8px' }}>
@@ -1353,7 +1482,7 @@ export default function AdminAnalytics() {
                     fontWeight: '500',
                   }}
                 >
-                  {selectedDemo.date}
+                  {formatDateTime(selectedDemo.createdAt)}
                 </div>
               </div>
 
@@ -1377,7 +1506,7 @@ export default function AdminAnalytics() {
                     fontWeight: '500',
                   }}
                 >
-                  {selectedDemo.nom}
+                  {selectedDemo.fullName}
                 </div>
               </div>
 
@@ -1401,7 +1530,7 @@ export default function AdminAnalytics() {
                     fontWeight: '500',
                   }}
                 >
-                  {selectedDemo.ecole}
+                  {selectedDemo.schoolName}
                 </div>
               </div>
 
@@ -1425,7 +1554,7 @@ export default function AdminAnalytics() {
                     fontWeight: '500',
                   }}
                 >
-                  {selectedDemo.ville}
+                  {selectedDemo.city ?? ''}
                 </div>
               </div>
 
@@ -1449,7 +1578,7 @@ export default function AdminAnalytics() {
                     fontWeight: '500',
                   }}
                 >
-                  {selectedDemo.eleves}
+                  {selectedDemo.numberOfStudents}
                 </div>
               </div>
 
@@ -1467,7 +1596,7 @@ export default function AdminAnalytics() {
                   Applications Sélectionnées
                 </div>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
-                  {selectedDemo.apps.split(' + ').map((app: string, idx: number) => (
+                  {(selectedDemo.interestedIn ?? []).map((app: string, idx: number) => (
                     <span
                       key={idx}
                       style={{
@@ -1527,7 +1656,7 @@ export default function AdminAnalytics() {
                 </div>
                 <span
                   style={{
-                    backgroundColor: selectedDemo.statusColor,
+                    backgroundColor: statusColor(selectedDemo.status),
                     color: 'white',
                     fontSize: '12px',
                     fontWeight: '600',
@@ -1536,16 +1665,23 @@ export default function AdminAnalytics() {
                     display: 'inline-block',
                   }}
                 >
-                  {selectedDemo.status}
+                  {statusLabelFr(selectedDemo.status)}
                 </span>
               </div>
 
               {/* Action Buttons */}
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <button
-                  onClick={() => {
-                    setToast('Marqué comme contacté');
-                    setSelectedDemo(null);
+                  onClick={async () => {
+                    try {
+                      await apiPut<DemoRequestDTO>(`/api/demo/requests/${selectedDemo.id}/status?status=NO_RESPONSE`);
+                      setToast('Statut mis à jour');
+                      setSelectedDemo(null);
+                      await loadDashboard();
+                      await loadDemoRequests();
+                    } catch {
+                      setToast('Erreur de mise à jour');
+                    }
                   }}
                   style={{
                     backgroundColor: '#2D472C',
@@ -1561,12 +1697,19 @@ export default function AdminAnalytics() {
                   onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
                   onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
                 >
-                  Marquer comme Contacté
+                  Marquer comme Non répondu
                 </button>
                 <button
-                  onClick={() => {
-                    setToast('Démo planifiée');
-                    setSelectedDemo(null);
+                  onClick={async () => {
+                    try {
+                      await apiPut<DemoRequestDTO>(`/api/demo/requests/${selectedDemo.id}/status?status=SCHEDULED`);
+                      setToast('Statut mis à jour');
+                      setSelectedDemo(null);
+                      await loadDashboard();
+                      await loadDemoRequests();
+                    } catch {
+                      setToast('Erreur de mise à jour');
+                    }
                   }}
                   style={{
                     backgroundColor: '#C5A059',
@@ -1582,7 +1725,7 @@ export default function AdminAnalytics() {
                   onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
                   onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
                 >
-                  Planifier une Démo
+                  Démo planifiée
                 </button>
               </div>
             </div>

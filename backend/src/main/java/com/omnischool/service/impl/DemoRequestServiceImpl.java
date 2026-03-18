@@ -152,6 +152,7 @@ public class DemoRequestServiceImpl implements DemoRequestService {
                 .phone(e.getPhone())
                 .schoolName(e.getSchoolName())
                 .schoolType(e.getSchoolType())
+                .city(e.getCity())
                 .numberOfStudents(e.getNumberOfStudents())
                 .level(e.getLevel())
                 .currentSystem(e.getCurrentSystem())
@@ -175,6 +176,7 @@ public class DemoRequestServiceImpl implements DemoRequestService {
                 .phone(d.getPhone())
                 .schoolName(d.getSchoolName())
                 .schoolType(d.getSchoolType())
+                .city(d.getCity())
                 .numberOfStudents(d.getNumberOfStudents())
                 .level(d.getLevel())
                 .currentSystem(d.getCurrentSystem())
@@ -188,4 +190,3 @@ public class DemoRequestServiceImpl implements DemoRequestService {
                 .build();
     }
 }
-

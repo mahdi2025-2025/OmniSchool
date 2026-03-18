@@ -3,13 +3,13 @@ import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Link } from 'react-router';
-import ens1 from '../../assets/ens1.jpg';
-import ens2 from '../../assets/ens2.png';
+import ens1 from '../../assets/ens15.png';
 import ens3 from '../../assets/ens3.jpg';
-import ens4 from '../../assets/ens4.jpg';
+import ens4 from '../../assets/ens15.png';
 import ens5 from '../../assets/ens5.jpg';
 import ens6 from '../../assets/ens6.jpg';
 import ens7 from '../../assets/ens7.jpg';
+import './appHeroMockup.css';
 
 export default function TeacherApp() {
   const [scrolled, setScrolled] = useState(false);
@@ -34,6 +34,33 @@ export default function TeacherApp() {
     { title: 'E-fiche de présence', image: ens5 },
     { title: 'Publier un homework en ligne', image: ens6 },
     { title: "Contacter l'administration", image: ens7 },
+  ];
+
+  const teacherFeatures = [
+    {
+      title: 'Présences Intelligentes',
+      description: 'Marquez les présences par classe en quelques secondes',
+    },
+    {
+      title: 'Gestion du Syllabus',
+      description: 'Planifiez et suivez votre programme par matière',
+    },
+    {
+      title: 'Saisie des Notes',
+      description: 'Entrez les notes CC1, CC2 et examens finaux',
+    },
+    {
+      title: 'Publication des Devoirs',
+      description: 'Partagez les devoirs avec les élèves et parents',
+    },
+    {
+      title: 'Emploi du Temps',
+      description: 'Consultez votre planning hebdomadaire en temps réel',
+    },
+    {
+      title: 'Demandes & Requêtes',
+      description: "Soumettez des demandes à l'administration",
+    },
   ];
 
   return (
@@ -96,72 +123,32 @@ export default function TeacherApp() {
               </button>
             </motion.div>
 
-            {/* Right - Image (ens1) */}
+            {/* Right - Image (ens15) */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
               className="relative flex justify-center lg:justify-end"
             >
-              {/* Premium blurred glow background */}
-              <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
-                <div
-                  className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] lg:w-[280px] lg:h-[280px] xl:w-[320px] xl:h-[320px] rounded-[32px]"
-                  style={{
-                    background:
-                      'radial-gradient(closest-side, rgba(45,71,44,0.15) 0%, rgba(45,71,44,0) 66%),' +
-                      'radial-gradient(closest-side, rgba(197,160,89,0.16) 0%, rgba(197,160,89,0) 62%)',
-                    filter: 'blur(14px)',
-                    transform: 'translateZ(0)',
-                  }}
-                />
-              </div>
-
-              {/* Framed container */}
-              <div
-                className="relative w-[200px] sm:w-[240px] lg:w-[280px] xl:w-[320px]"
-                style={{
-                  borderRadius: '16px',
-                  background: 'rgba(255,255,255,0.78)',
-                  border: '1px solid rgba(229,231,235,0.92)',
-                  boxShadow: '0 14px 36px rgba(17,24,39,0.12)',
-                  backdropFilter: 'blur(10px)',
-                  padding: '9px',
-                }}
-              >
-                {/* glossy top bar */}
-                <div
-                  className="flex items-center gap-2 px-3 py-2"
-                  style={{
-                    borderRadius: '12px',
-                    background: 'linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(249,249,247,0.80) 100%)',
-                    border: '1px solid rgba(229,231,235,0.95)',
-                    marginBottom: '8px',
-                  }}
-                >
-                  <div className="flex gap-1.5">
-                    <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#F87171' }} />
-                    <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#FBBF24' }} />
-                    <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#34D399' }} />
+              <div className="omni-hero-mockup">
+                <div className="omni-hero-mockup__frame">
+                  <div className="omni-hero-mockup__bar">
+                    <div className="omni-hero-mockup__dots" aria-hidden="true">
+                      <span className="omni-hero-mockup__dot omni-hero-mockup__dot--red" />
+                      <span className="omni-hero-mockup__dot omni-hero-mockup__dot--yellow" />
+                      <span className="omni-hero-mockup__dot omni-hero-mockup__dot--green" />
+                    </div>
+                    <div className="omni-hero-mockup__title">OmniSchool • Enseignants</div>
                   </div>
-                  <div className="ml-auto text-[11px]" style={{ color: '#6B7280' }}>
-                    OmniSchool • Enseignants
+
+                  <div className="omni-hero-mockup__media">
+                    <img
+                      src={ens1}
+                      alt="Application Enseignant OmniSchool"
+                      className="omni-hero-mockup__img"
+                    />
                   </div>
                 </div>
-
-                <img
-                  src={ens1}
-                  alt="Application Enseignant OmniSchool"
-                  className="w-full h-auto"
-                  style={{
-                    borderRadius: '12px',
-                    border: '1px solid rgba(229,231,235,0.9)',
-                    boxShadow: '0 8px 16px rgba(0,0,0,0.10)',
-                    backgroundColor: 'white',
-                    display: 'block',
-                    objectFit: 'cover',
-                  }}
-                />
               </div>
             </motion.div>
           </div>
@@ -197,68 +184,46 @@ export default function TeacherApp() {
             </h2>
           </div>
 
-          {/* Features visual (ens2) */}
-          <div className="relative flex justify-center">
-            {/* Premium blurred glow background */}
-            <div aria-hidden="true" className="absolute inset-0 flex items-center justify-center">
-              <div
-                className="w-[360px] h-[360px] sm:w-[680px] sm:h-[680px] lg:w-[480px] lg:h-[480px] xl:w-[760px] xl:h-[760px] rounded-[44px]"
+          {/* Features grid (text cards) */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {teacherFeatures.map((feature, index) => (
+              <motion.div
+                key={feature.title}
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.35, ease: 'easeOut', delay: index * 0.05 }}
+                className="group p-6 border transition-all duration-200 flex flex-col"
                 style={{
-                  background:
-                    'radial-gradient(closest-side, rgba(45,71,44,0.16) 0%, rgba(45,71,44,0) 66%),' +
-                    'radial-gradient(closest-side, rgba(197,160,89,0.18) 0%, rgba(197,160,89,0) 62%)',
-                  filter: 'blur(20px)',
-                  transform: 'translateZ(0)',
+                  backgroundColor: 'white',
+                  borderColor: '#E5E7EB',
+                  borderRadius: '12px',
+                  boxShadow: '0 18px 44px rgba(17,24,39,0.08)',
+                  minHeight: '150px',
                 }}
-              />
-            </div>
-
-            {/* Framed container */}
-            <div
-              className="relative w-[340px] sm:w-[680px] lg:w-[480px] xl:w-[760px]"
-              style={{
-                borderRadius: '22px',
-                background: 'rgba(255,255,255,0.76)',
-                border: '1px solid rgba(229,231,235,0.92)',
-                boxShadow: '0 22px 60px rgba(17,24,39,0.12)',
-                backdropFilter: 'blur(10px)',
-                padding: '12px',
-              }}
-            >
-              {/* glossy top bar */}
-              <div
-                className="flex items-center gap-2 px-3 py-2"
-                style={{
-                  borderRadius: '16px',
-                  background: 'linear-gradient(180deg, rgba(255,255,255,0.92) 0%, rgba(249,249,247,0.80) 100%)',
-                  border: '1px solid rgba(229,231,235,0.95)',
-                  marginBottom: '12px',
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#2D472C';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#E5E7EB';
                 }}
               >
-                <div className="flex gap-1.5">
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#F87171' }} />
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#FBBF24' }} />
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#34D399' }} />
-                </div>
-                <div className="ml-auto text-[11px]" style={{ color: '#6B7280' }}>
-                  OmniSchool • Fonctionnalités Enseignant
-                </div>
-              </div>
-
-              <img
-                src={ens2}
-                alt="Fonctionnalités - Application Enseignant"
-                className="w-full h-auto transition-transform duration-300 ease-out hover:scale-[1.03]"
-                style={{
-                  borderRadius: '18px',
-                  border: '1px solid rgba(229,231,235,0.9)',
-                  boxShadow: '0 14px 34px rgba(0,0,0,0.10)',
-                  backgroundColor: 'white',
-                  display: 'block',
-                  objectFit: 'cover',
-                }}
-              />
-            </div>
+                <h3
+                  style={{
+                    fontFamily: 'Montserrat, sans-serif',
+                    fontSize: '16px',
+                    fontWeight: '700',
+                    color: '#333333',
+                    marginBottom: '8px',
+                  }}
+                >
+                  {feature.title}
+                </h3>
+                <p style={{ fontSize: '13px', color: '#6B7280', lineHeight: '1.55' }}>
+                  {feature.description}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>

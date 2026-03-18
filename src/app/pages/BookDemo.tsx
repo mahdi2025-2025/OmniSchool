@@ -4,6 +4,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { CheckCircle, Mail, Phone, MapPin, LayoutDashboard, GraduationCap, Users, BarChart2 } from 'lucide-react';
 import { Link } from 'react-router';
+import { API_BASE_URL } from '../lib/api';
 
 export default function BookDemo() {
   const [scrolled, setScrolled] = useState(false);
@@ -24,6 +25,8 @@ export default function BookDemo() {
     },
     message: '',
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const handleCheckboxChange = (app: keyof typeof formData.apps) => {
     setFormData({
@@ -35,9 +38,89 @@ export default function BookDemo() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
+    setSubmitError(null);
+
+    // Backend expects Tunisian format: exactly 8 digits (no +216)
+    const normalizedPhone = formData.phone.replace(/\s+/g, '').replace(/^\+216/, '');
+    if (!/^\d{8}$/.test(normalizedPhone)) {
+      setSubmitError('Téléphone invalide. Utilisez 8 chiffres (format تونس: 12345678).');
+      return;
+    }
+
+    const interestedIn = Object.entries(formData.apps)
+      .filter(([, v]) => v)
+      .map(([k]) => {
+        switch (k) {
+          case 'assistant':
+            return 'Dashboard Assistant';
+          case 'teacher':
+            return 'App Enseignant';
+          case 'parent':
+            return 'App Parent';
+          case 'manager':
+            return 'Dashboard Manager';
+          default:
+            return k;
+        }
+      });
+
+    const payload = {
+      fullName: `${formData.firstName} ${formData.lastName}`.trim(),
+      email: formData.email.trim(),
+      phone: normalizedPhone,
+      schoolName: formData.schoolName.trim(),
+      city: formData.city.trim(),
+      // This form doesn't collect PRIMARY/SECONDARY/BOTH; default to BOTH.
+      schoolType: 'BOTH',
+      numberOfStudents: (() => {
+        switch (formData.studentCount) {
+          case 'less-100':
+            return 80;
+          case '100-200':
+            return 150;
+          case '200-400':
+            return 300;
+          case '400-600':
+            return 500;
+          case '600+':
+            return 650;
+          default:
+            return 50;
+        }
+      })(),
+      level: null,
+      currentSystem: null,
+      preferredDate: null,
+      preferredTime: null,
+      interestedIn,
+      message: formData.message ? formData.message : null,
+    };
+
+    try {
+      setIsSubmitting(true);
+
+      const res = await fetch(`${API_BASE_URL}/api/demo/request`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!res.ok) {
+        const errBody = await res.json().catch(() => null);
+        const msg = errBody?.message || errBody?.error || `Erreur serveur (${res.status})`;
+        throw new Error(msg);
+      }
+
+      setFormSubmitted(true);
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Erreur lors de l’envoi.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (
@@ -188,6 +271,23 @@ export default function BookDemo() {
                     </h2>
 
                     <form onSubmit={handleSubmit} style={{ marginTop: '24px' }}>
+                      {submitError && (
+                        <div
+                          style={{
+                            marginBottom: '16px',
+                            padding: '12px',
+                            borderRadius: '8px',
+                            backgroundColor: 'rgba(220, 38, 38, 0.06)',
+                            border: '1px solid rgba(220, 38, 38, 0.2)',
+                            color: '#991B1B',
+                            fontSize: '13px',
+                            lineHeight: 1.4,
+                          }}
+                        >
+                          {submitError}
+                        </div>
+                      )}
+
                       {/* Row 1 - First Name & Last Name */}
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
                         <div>
@@ -529,6 +629,7 @@ export default function BookDemo() {
                       {/* Submit Button */}
                       <button
                         type="submit"
+                        disabled={isSubmitting}
                         style={{
                           width: '100%',
                           height: '48px',
@@ -539,13 +640,18 @@ export default function BookDemo() {
                           fontWeight: '600',
                           borderRadius: '4px',
                           border: 'none',
-                          cursor: 'pointer',
+                          cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                          opacity: isSubmitting ? 0.75 : 1,
                           transition: 'all 0.2s ease-out',
                         }}
-                        onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
-                        onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+                        onMouseEnter={(e) => {
+                          if (!isSubmitting) e.currentTarget.style.opacity = '0.9';
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!isSubmitting) e.currentTarget.style.opacity = '1';
+                        }}
                       >
-                        Envoyer ma Demande de Démo →
+                        {isSubmitting ? 'Envoi en cours…' : 'Envoyer ma Demande de Démo →'}
                       </button>
 
                       {/* Note */}

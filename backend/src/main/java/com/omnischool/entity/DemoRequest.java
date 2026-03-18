@@ -66,7 +66,13 @@ public class DemoRequest {
     @Column(nullable = false)
     @Builder.Default
     private DemoStatus status = DemoStatus.PENDING;
+    /** City of the school (from public booking form). */
+    private String city;
 
+    /**
+     * Name/email of the staff member responsible for handling this demo request.
+     * Used by admin dashboard assignment workflows.
+     */
     private String assignedTo;
 
     @Column(nullable = false, updatable = false)

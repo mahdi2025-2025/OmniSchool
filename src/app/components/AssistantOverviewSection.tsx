@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Monitor } from 'lucide-react';
+import dash1 from '../../assets/dash1.png';
 
 export function AssistantOverviewSection() {
   return (
@@ -79,7 +79,7 @@ export function AssistantOverviewSection() {
             </div>
           </motion.div>
 
-          {/* Right Side - Image Placeholder (Edge to Edge) */}
+          {/* Right Side - Dashboard Image */}
           <motion.div
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -87,8 +87,8 @@ export function AssistantOverviewSection() {
             transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
             className="flex items-center justify-center"
           >
-            <div 
-              className="flex items-center justify-center"
+            <div
+              className="flex items-center justify-center overflow-hidden"
               style={{
                 width: '440px',
                 height: '580px',
@@ -96,7 +96,12 @@ export function AssistantOverviewSection() {
                 backgroundColor: '#DEDED8'
               }}
             >
-              <Monitor size={48} style={{ color: '#9CA3AF' }} />
+              <img
+                src={dash1}
+                alt="Dashboard assistant"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                loading="lazy"
+              />
             </div>
           </motion.div>
         </div>

@@ -41,7 +41,16 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleGeneric(Exception ex, HttpServletRequest req) {
-        return build(HttpStatus.INTERNAL_SERVER_ERROR, "Unexpected error", req.getRequestURI(), null);
+        // Surface the real cause to help debug in dev; frontend still can keep a generic message.
+        String msg = ex.getMessage();
+        Throwable cause = ex.getCause();
+        if ((msg == null || msg.isBlank()) && cause != null) {
+            msg = cause.getMessage();
+        }
+        if (msg == null || msg.isBlank()) {
+            msg = ex.getClass().getSimpleName();
+        }
+        return build(HttpStatus.INTERNAL_SERVER_ERROR, msg, req.getRequestURI(), null);
     }
 
     private ResponseEntity<ErrorResponse> build(HttpStatus status, String message, String path, Map<String, String> fieldErrors) {
@@ -56,4 +65,3 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(body);
     }
 }
-
