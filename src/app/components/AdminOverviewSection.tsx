@@ -1,12 +1,12 @@
 import { motion } from 'motion/react';
-import { GraduationCap } from 'lucide-react';
+import imhImage from '../../assets/imh.png';
 
 export function AdminOverviewSection() {
   return (
     <section className="py-24 px-6" style={{ backgroundColor: 'white' }}>
       <div className="max-w-[1280px] mx-auto">
         <div className="grid lg:grid-cols-[55%_45%] gap-16 items-center">
-          {/* Left Side - Image Placeholder */}
+          {/* Left Side - Image */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -14,16 +14,43 @@ export function AdminOverviewSection() {
             transition={{ duration: 0.6, ease: 'easeOut' }}
             className="flex items-center justify-center"
           >
-            <div 
-              className="flex items-center justify-center"
+            <div
               style={{
-                width: '440px',
+                width: '100%',
+                maxWidth: '460px',
                 height: '580px',
-                borderRadius: '16px',
-                backgroundColor: '#E8E8E4'
+                borderRadius: '18px',
+                position: 'relative',
+                overflow: 'hidden',
+                background:
+                  'radial-gradient(120% 120% at 0% 0%, rgba(197, 160, 89, 0.18) 0%, rgba(255,255,255,0) 55%), linear-gradient(135deg, rgba(45, 71, 44, 0.10), rgba(197, 160, 89, 0.08))',
+                border: '1px solid rgba(45, 71, 44, 0.14)',
+                boxShadow: '0 18px 50px rgba(0,0,0,0.12)',
               }}
             >
-              <GraduationCap size={48} style={{ color: '#9CA3AF' }} />
+              <img
+                src={imhImage}
+                alt="Aperçu Omnischool - Administrateur"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                  display: 'block',
+                  filter: 'saturate(1.05) contrast(1.03)',
+                }}
+              />
+
+              {/* subtle readability overlay */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background:
+                    'linear-gradient(180deg, rgba(45, 71, 44, 0.10) 0%, rgba(0,0,0,0.06) 55%, rgba(0,0,0,0.10) 100%)',
+                  pointerEvents: 'none',
+                }}
+              />
             </div>
           </motion.div>
 
@@ -36,14 +63,14 @@ export function AdminOverviewSection() {
             className="space-y-4"
           >
             {/* Label */}
-            <div 
-              style={{ 
+            <div
+              style={{
                 fontFamily: 'Inter, sans-serif',
                 fontSize: '11px',
                 letterSpacing: '0.15em',
                 color: '#C5A059',
                 textTransform: 'uppercase',
-                fontWeight: '600'
+                fontWeight: '600',
               }}
             >
               POUR L'ADMINISTRATEUR
@@ -51,29 +78,32 @@ export function AdminOverviewSection() {
 
             {/* Title */}
             <h2
-              style={{ 
-                fontFamily: 'Montserrat, sans-serif', 
-                fontSize: '36px', 
-                fontWeight: '700', 
+              style={{
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: '36px',
+                fontWeight: '700',
                 color: '#333333',
                 lineHeight: '1.2',
-                maxWidth: '420px'
+                maxWidth: '420px',
               }}
             >
               Toute la Gestion Scolaire en Un Seul Endroit
             </h2>
 
             {/* Description */}
-            <p 
-              style={{ 
-                fontSize: '15px', 
-                color: '#6B7280', 
+            <p
+              style={{
+                fontSize: '15px',
+                color: '#6B7280',
                 lineHeight: '1.7',
                 maxWidth: '420px',
-                paddingTop: '4px'
+                paddingTop: '4px',
               }}
             >
-              Des processus scolaires digitaux bien conçus sont la base d'une école efficace. Omnischool centralise tout ce dont votre équipe a besoin — élèves, finances, emploi du temps et communication — dans une plateforme simple et puissante.
+              Des processus scolaires digitaux bien conçus sont la base d'une école
+              efficace. Omnischool centralise tout ce dont votre équipe a besoin —
+              élèves, finances, emploi du temps et communication — dans une
+              plateforme simple et puissante.
             </p>
           </motion.div>
         </div>

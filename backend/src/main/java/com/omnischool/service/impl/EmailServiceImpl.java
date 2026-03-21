@@ -6,6 +6,8 @@ import com.omnischool.enums.DemoStatus;
 import com.omnischool.service.EmailService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
@@ -20,9 +22,11 @@ public class EmailServiceImpl implements EmailService {
     private static final String ADMIN_EMAIL = "admin@omnischool.tn";
 
     private final JavaMailSender mailSender;
+    private final boolean mailEnabled;
 
-    public EmailServiceImpl(JavaMailSender mailSender) {
+    public EmailServiceImpl(JavaMailSender mailSender, @Value("${app.mail.enabled:true}") boolean mailEnabled) {
         this.mailSender = mailSender;
+        this.mailEnabled = mailEnabled;
     }
 
     @Async
@@ -101,6 +105,9 @@ public class EmailServiceImpl implements EmailService {
     }
 
     private void safeSend(String to, String subject, String htmlBody) {
+        if (!mailEnabled) {
+            return;
+        }
         try {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "UTF-8");
@@ -108,7 +115,7 @@ public class EmailServiceImpl implements EmailService {
             helper.setSubject(subject);
             helper.setText(htmlBody, true);
             mailSender.send(mimeMessage);
-        } catch (MessagingException ex) {
+        } catch (MessagingException | MailException ex) {
             // Intentionally swallow to avoid failing business flow due to mail issues.
         }
     }
@@ -120,4 +127,3 @@ public class EmailServiceImpl implements EmailService {
                 .replace(">", "&gt;");
     }
 }
-

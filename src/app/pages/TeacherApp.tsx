@@ -272,7 +272,7 @@ export default function TeacherApp() {
                   style={{
                     borderRadius: '26px',
                     background: 'rgba(255,255,255,0.78)',
-                    border: '1px solid rgba(229,231,235,0.92)',
+                    border: '1px solid rgba(45, 71, 44, 0.35)',
                     boxShadow: '0 18px 44px rgba(17,24,39,0.10)',
                     backdropFilter: 'blur(10px)',
                     padding: '10px',
@@ -283,7 +283,7 @@ export default function TeacherApp() {
                     style={{
                       borderRadius: '20px',
                       overflow: 'hidden',
-                      border: '1px solid rgba(229,231,235,0.92)',
+                      border: '1px solid rgba(45, 71, 44, 0.28)',
                       background: 'white',
                     }}
                   >

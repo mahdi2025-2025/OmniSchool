@@ -1,4 +1,5 @@
 package com.omnischool.enums;
+
 /**
  * Demo request lifecycle status.
  *
@@ -7,10 +8,10 @@ package com.omnischool.enums;
 public enum DemoStatus {
     /** En attente */
     PENDING,
+
     /** Non répondu */
     NO_RESPONSE,
 
     /** Démo planifiée */
     SCHEDULED
 }
-

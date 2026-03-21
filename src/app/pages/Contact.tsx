@@ -4,10 +4,15 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Calendar, MessageSquare, Headphones, MapPin, Mail, Phone, Clock, CheckCircle, ChevronDown, ChevronUp, Linkedin, Facebook, Instagram } from 'lucide-react';
 import { Link } from 'react-router';
+import { apiPost } from '../lib/api';
+import c1Image from '../../assets/c1.png';
+import './Contact.css';
 
 export default function Contact() {
   const [scrolled, setScrolled] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -18,9 +23,36 @@ export default function Contact() {
   });
   const [activeAccordion, setActiveAccordion] = useState<number | null>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setFormSubmitted(true);
+    setSubmitError(null);
+    setIsSubmitting(true);
+
+    try {
+      const payload = {
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.email,
+        phone: formData.phone,
+        subject: formData.subject,
+        message: formData.message,
+      };
+
+      await apiPost('/api/contact/submit', payload);
+
+      setFormSubmitted(true);
+      setFormData({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        subject: '',
+        message: '',
+      });
+    } catch (err: any) {
+      setSubmitError(err?.message ?? "Erreur lors de l'envoi du message.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleInputChange = (
@@ -74,7 +106,7 @@ export default function Contact() {
             pointerEvents: 'none',
           }}
         />
-        
+
         {/* Decorative Circle - Bottom Right */}
         <div
           style={{
@@ -124,25 +156,19 @@ export default function Contact() {
               </p>
             </motion.div>
 
-            {/* Right side - Image Placeholder */}
+            {/* Right side - Image */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-              style={{
-                width: '100%',
-                maxWidth: '580px',
-                height: '420px',
-                backgroundColor: '#DEDED8',
-                borderRadius: '16px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.08)',
-                marginLeft: 'auto',
-              }}
+              className="contact-hero-media"
             >
-              <Phone size={48} style={{ color: '#9CA3AF' }} />
+              <img src={c1Image} alt="Contact Us" className="contact-hero-media__img" />
+              <div className="contact-hero-media__overlay" />
+              <div className="contact-hero-media__badges">
+                <span className="contact-hero-media__badgePrimary">Contactez-nous</span>
+                <span className="contact-hero-media__badgeSecondary">Nous sommes là pour vous aider</span>
+              </div>
             </motion.div>
           </div>
         </div>
@@ -554,8 +580,26 @@ export default function Contact() {
                       </div>
 
                       {/* Submit Button */}
+                      {submitError && (
+                        <div
+                          role="alert"
+                          style={{
+                            marginBottom: '12px',
+                            padding: '10px 12px',
+                            borderRadius: '6px',
+                            border: '1px solid rgba(239, 68, 68, 0.35)',
+                            backgroundColor: 'rgba(239, 68, 68, 0.08)',
+                            color: '#991B1B',
+                            fontSize: '13px',
+                          }}
+                        >
+                          {submitError}
+                        </div>
+                      )}
+
                       <button
                         type="submit"
+                        disabled={isSubmitting}
                         style={{
                           width: '100%',
                           height: '48px',
@@ -566,13 +610,18 @@ export default function Contact() {
                           fontWeight: '600',
                           borderRadius: '4px',
                           border: 'none',
-                          cursor: 'pointer',
+                          cursor: isSubmitting ? 'not-allowed' : 'pointer',
                           transition: 'all 0.2s ease-out',
+                          opacity: isSubmitting ? 0.85 : 1,
                         }}
-                        onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.9')}
-                        onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+                        onMouseEnter={(e) => {
+                          if (!isSubmitting) e.currentTarget.style.opacity = '0.9';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.opacity = isSubmitting ? '0.85' : '1';
+                        }}
                       >
-                        Envoyer le Message →
+                        {isSubmitting ? 'Envoi...' : 'Envoyer le Message →'}
                       </button>
                     </form>
                   </>

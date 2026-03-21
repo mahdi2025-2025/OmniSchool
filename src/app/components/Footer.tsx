@@ -20,15 +20,38 @@ export function Footer() {
               La Solution Scolaire de Demain
             </p>
             <div className="flex gap-4">
-              {[Facebook, Twitter, Linkedin, Instagram].map((Icon, index) => (
-                <a
-                  key={index}
-                  href="#"
-                  className="transition-opacity duration-200 hover:opacity-70"
-                >
-                  <Icon size={20} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
-                </a>
-              ))}
+              <a
+                href="https://www.facebook.com/profile.php?id=61576014832405"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Facebook"
+                className="transition-opacity duration-200 hover:opacity-70"
+              >
+                <Facebook size={20} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
+              </a>
+              <a
+                href="#"
+                aria-label="Twitter"
+                className="transition-opacity duration-200 hover:opacity-70"
+              >
+                <Twitter size={20} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
+              </a>
+              <a
+                href="https://www.linkedin.com/company/omnilinks-tn/posts/?feedView=all"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="LinkedIn"
+                className="transition-opacity duration-200 hover:opacity-70"
+              >
+                <Linkedin size={20} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
+              </a>
+              <a
+                href="#"
+                aria-label="Instagram"
+                className="transition-opacity duration-200 hover:opacity-70"
+              >
+                <Instagram size={20} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
+              </a>
             </div>
           </div>
 
@@ -94,10 +117,35 @@ export function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="text-center pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
-          <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.4)' }}>
-            © 2026 Omnischool. Tous droits réservés.
-          </p>
+        <div className="pt-8 border-t" style={{ borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <p
+              className="text-center sm:text-left"
+              style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.4)' }}
+            >
+              © 2026 Omnischool. Tous droits réservés.
+            </p>
+
+            <p
+              className="text-center"
+              style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.4)' }}
+            >
+              PoweredBy OmniLinks
+            </p>
+
+            <div
+              className="flex items-center justify-center sm:justify-end gap-4"
+              style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.4)' }}
+            >
+              <a href="#" className="transition-opacity duration-200 hover:opacity-70">
+                Confidentialité
+              </a>
+              <span style={{ color: 'rgba(255, 255, 255, 0.25)' }}>|</span>
+              <a href="#" className="transition-opacity duration-200 hover:opacity-70">
+                Conditions d'utilisation
+              </a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>

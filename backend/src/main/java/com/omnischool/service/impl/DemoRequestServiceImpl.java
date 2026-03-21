@@ -9,9 +9,11 @@ import com.omnischool.exception.ResourceNotFoundException;
 import com.omnischool.repository.DemoRequestRepository;
 import com.omnischool.service.DemoRequestService;
 import com.omnischool.service.EmailService;
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -47,20 +49,27 @@ public class DemoRequestServiceImpl implements DemoRequestService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Page<DemoRequestDTO> getFilteredRequests(DemoStatus status, String search, Pageable pageable) {
         String normalized = (search == null || search.isBlank()) ? null : search.trim();
         return repository.search(status, normalized, pageable)
-                .map(DemoRequestServiceImpl::toDto);
+                .map(e -> {
+                    Hibernate.initialize(e.getInterestedIn());
+                    return toDto(e);
+                });
     }
 
     @Override
+    @Transactional(readOnly = true)
     public DemoRequestDTO getById(Long id) {
         DemoRequest entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("DemoRequest not found"));
+        Hibernate.initialize(entity.getInterestedIn());
         return toDto(entity);
     }
 
     @Override
+    @Transactional
     public DemoRequestDTO updateStatus(Long id, DemoStatus status) {
         DemoRequest entity = repository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("DemoRequest not found"));
@@ -73,9 +82,15 @@ public class DemoRequestServiceImpl implements DemoRequestService {
         }
 
         DemoRequest saved = repository.save(entity);
+        Hibernate.initialize(saved.getInterestedIn());
 
-        // Notify requester about status update
-        emailService.sendDemoStatusUpdateNotification(saved, old, status);
+        // Notify requester about status update (async, don't fail the update if email fails)
+        try {
+            emailService.sendDemoStatusUpdateNotification(saved, old, status);
+        } catch (Exception e) {
+            // Log the error but don't fail the update
+            // TODO: log the exception
+        }
 
         return toDto(saved);
     }
@@ -101,7 +116,7 @@ public class DemoRequestServiceImpl implements DemoRequestService {
 
         long total = range.size();
         long pending = range.stream().filter(r -> r.getStatus() == DemoStatus.PENDING).count();
-        long completed = range.stream().filter(r -> r.getStatus() == DemoStatus.COMPLETED).count();
+        long completed = range.stream().filter(r -> r.getStatus() == DemoStatus.SCHEDULED).count();
         double conversion = total == 0 ? 0.0 : (completed * 100.0) / total;
 
         Map<DemoStatus, Long> byStatus = new EnumMap<>(DemoStatus.class);
@@ -121,7 +136,7 @@ public class DemoRequestServiceImpl implements DemoRequestService {
                 .sorted(Map.Entry.comparingByKey())
                 .map(e -> {
                     long req = e.getValue().size();
-                    long conv = e.getValue().stream().filter(r -> r.getStatus() == DemoStatus.COMPLETED).count();
+                    long conv = e.getValue().stream().filter(r -> r.getStatus() == DemoStatus.SCHEDULED).count();
                     return DailyTrendDTO.builder()
                             .date(e.getKey())
                             .requests(req)
@@ -145,6 +160,10 @@ public class DemoRequestServiceImpl implements DemoRequestService {
     // -----------------------
 
     private static DemoRequestDTO toDto(DemoRequest e) {
+        // Force initialization of the ElementCollection while the session is open
+        // (prevents LazyInitializationException during JSON serialization)
+        List<String> interests = (e.getInterestedIn() == null) ? List.of() : new ArrayList<>(e.getInterestedIn());
+
         return DemoRequestDTO.builder()
                 .id(e.getId())
                 .fullName(e.getFullName())
@@ -158,7 +177,7 @@ public class DemoRequestServiceImpl implements DemoRequestService {
                 .currentSystem(e.getCurrentSystem())
                 .preferredDate(e.getPreferredDate())
                 .preferredTime(e.getPreferredTime())
-                .interestedIn(e.getInterestedIn())
+                .interestedIn(interests)
                 .message(e.getMessage())
                 .status(e.getStatus())
                 .assignedTo(e.getAssignedTo())

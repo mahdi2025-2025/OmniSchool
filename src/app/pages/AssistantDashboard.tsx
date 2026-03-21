@@ -4,10 +4,20 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Users, ClipboardCheck, Calendar, FileText, Mail, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router';
-import a1 from '../../assets/a1.jpg';
+import dash1 from '../../assets/dash1.png';
+import dash2 from '../../assets/dash2.jpg';
+import dash3 from '../../assets/dash3.jpg';
+import dash4 from '../../assets/dash4.jpg';
+import dash5 from '../../assets/dash5.jpg';
+import dash6 from '../../assets/dash6.jpg';
+import dash7 from '../../assets/dash7.jpg';
+import dash8 from '../../assets/dash8.jpg';
+import dash9 from '../../assets/dash 9.jpg';
+import dash10 from '../../assets/dash10.jpg';
 
 export default function AssistantDashboard() {
   const [scrolled, setScrolled] = useState(false);
+  const [activeShotIndex, setActiveShotIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -16,6 +26,25 @@ export default function AssistantDashboard() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  useEffect(() => {
+    if (activeShotIndex === null) return;
+
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setActiveShotIndex(null);
+      if (e.key === 'ArrowRight') setActiveShotIndex((i) => (i === null ? i : (i + 1) % dashboardShots.length));
+      if (e.key === 'ArrowLeft') setActiveShotIndex((i) => (i === null ? i : (i - 1 + dashboardShots.length) % dashboardShots.length));
+    };
+
+    document.addEventListener('keydown', onKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [activeShotIndex]);
 
   const scrollToFeatures = () => {
     const el = document.getElementById('assistant-features');
@@ -31,11 +60,110 @@ export default function AssistantDashboard() {
     { icon: TrendingUp, title: 'Finance Complète', description: 'Frais scolaires, salaires, fournisseurs et rapports' },
   ];
 
-  const screens = ['Finance', 'Élèves', 'Emploi du Temps'];
+  const dashboardShots = [
+    { src: dash2, alt: 'Dashboard OmniSchool - Écran 1' },
+    { src: dash3, alt: 'Dashboard OmniSchool - Écran 2' },
+    { src: dash4, alt: 'Dashboard OmniSchool - Écran 3' },
+    { src: dash5, alt: 'Dashboard OmniSchool - Écran 4' },
+    { src: dash6, alt: 'Dashboard OmniSchool - Écran 5' },
+    { src: dash7, alt: 'Dashboard OmniSchool - Écran 6' },
+    { src: dash8, alt: 'Dashboard OmniSchool - Écran 7' },
+    { src: dash9, alt: 'Dashboard OmniSchool - Écran 8' },
+    { src: dash10, alt: 'Dashboard OmniSchool - Écran 9' },
+  ];
+
+  const activeShot = activeShotIndex !== null ? dashboardShots[activeShotIndex] : null;
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F9F9F7', fontFamily: 'Inter, sans-serif' }}>
       <Navbar scrolled={scrolled} />
+
+      {/* Lightbox Modal */}
+      {activeShot && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Aperçu du dashboard"
+          className="fixed inset-0 z-[9999]"
+        >
+          {/* Backdrop */}
+          <button
+            type="button"
+            aria-label="Fermer"
+            className="absolute inset-0 w-full h-full"
+            onClick={() => setActiveShotIndex(null)}
+            style={{ backgroundColor: 'rgba(17, 24, 39, 0.72)' }}
+          />
+
+          {/* Panel */}
+          <div className="relative h-full w-full p-4 sm:p-8 flex items-center justify-center">
+            <div
+              className="relative w-full max-w-[1100px]"
+              style={{
+                borderRadius: '16px',
+                background: 'rgba(255,255,255,0.92)',
+                border: '1px solid rgba(229,231,235,0.9)',
+                boxShadow: '0 24px 80px rgba(0,0,0,0.35)',
+                backdropFilter: 'blur(10px)',
+                overflow: 'hidden',
+              }}
+            >
+              <div className="flex items-center gap-2 px-4 py-3" style={{ borderBottom: '1px solid rgba(229,231,235,0.9)' }}>
+                <div className="text-[12px]" style={{ color: '#6B7280' }}>
+                  {activeShot.alt}
+                </div>
+                <div className="ml-auto flex items-center gap-2">
+                  <button
+                    type="button"
+                    className="px-3 py-1.5 rounded-md text-[12px] transition-opacity duration-200 hover:opacity-80"
+                    style={{ backgroundColor: '#F3F4F6', color: '#111827' }}
+                    onClick={() => setActiveShotIndex((i) => (i === null ? i : (i - 1 + dashboardShots.length) % dashboardShots.length))}
+                  >
+                    Précédent
+                  </button>
+                  <button
+                    type="button"
+                    className="px-3 py-1.5 rounded-md text-[12px] transition-opacity duration-200 hover:opacity-80"
+                    style={{ backgroundColor: '#F3F4F6', color: '#111827' }}
+                    onClick={() => setActiveShotIndex((i) => (i === null ? i : (i + 1) % dashboardShots.length))}
+                  >
+                    Suivant
+                  </button>
+                  <button
+                    type="button"
+                    className="px-3 py-1.5 rounded-md text-[12px] transition-opacity duration-200 hover:opacity-80"
+                    style={{ backgroundColor: '#111827', color: 'white' }}
+                    onClick={() => setActiveShotIndex(null)}
+                  >
+                    Fermer
+                  </button>
+                </div>
+              </div>
+
+              <div className="p-3 sm:p-4" style={{ backgroundColor: '#0B1220' }}>
+                <div
+                  className="w-full"
+                  style={{
+                    borderRadius: '12px',
+                    overflow: 'hidden',
+                    backgroundColor: '#111827',
+                    border: '1px solid rgba(255,255,255,0.06)',
+                  }}
+                >
+                  <img
+                    src={activeShot.src}
+                    alt={activeShot.alt}
+                    className="w-full h-[70vh] object-contain bg-[#0B1220]"
+                  />
+                </div>
+                <div className="mt-3 text-center text-[12px]" style={{ color: 'rgba(255,255,255,0.7)' }}>
+                  Cliquez à l’extérieur pour fermer • Échap pour fermer • ←/→ pour naviguer
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Section 1 - Hero */}
       <section className="pt-32 pb-24 px-6" style={{ backgroundColor: '#F9F9F7' }}>
@@ -93,7 +221,7 @@ export default function AssistantDashboard() {
               </button>
             </motion.div>
 
-            {/* Right - Desktop Visual (a1) */}
+            {/* Right - Desktop Visual (dash1) */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -148,7 +276,7 @@ export default function AssistantDashboard() {
 
                 <div style={{ borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(229,231,235,0.9)' }}>
                   <img
-                    src={a1}
+                    src={dash1}
                     alt="Dashboard Assistant OmniSchool"
                     className="w-full h-auto transition-transform duration-300 ease-out hover:scale-[1.02]"
                     style={{
@@ -253,63 +381,31 @@ export default function AssistantDashboard() {
             </h2>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {screens.map((screen, index) => (
-              <motion.div
-                key={index}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {dashboardShots.map((shot, index) => (
+              <motion.button
+                key={shot.alt}
+                type="button"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, ease: 'easeOut', delay: index * 0.1 }}
+                transition={{ duration: 0.4, ease: 'easeOut', delay: (index % 3) * 0.08 }}
+                className="overflow-hidden text-left"
+                onClick={() => setActiveShotIndex(index)}
                 style={{
-                  width: '340px',
-                  height: '220px',
                   borderRadius: '12px',
                   backgroundColor: 'white',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.08)',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  margin: '0 auto'
+                  boxShadow: '0 8px 22px rgba(0, 0, 0, 0.08)',
+                  border: '1px solid rgba(45, 71, 44, 0.55)',
                 }}
               >
-                {/* Sidebar */}
-                <div style={{ width: '40px', backgroundColor: '#2D472C' }}></div>
-                {/* Main */}
-                <div style={{ flex: 1 }}>
-                  {/* Header */}
-                  <div style={{ height: '40px', backgroundColor: '#2D472C' }}></div>
-                  {/* Badge */}
-                  <div style={{ padding: '12px' }}>
-                    <div
-                      style={{
-                        display: 'inline-block',
-                        padding: '4px 8px',
-                        backgroundColor: '#F9F9F7',
-                        borderRadius: '4px',
-                        fontSize: '11px',
-                        fontWeight: '600',
-                        color: '#333333'
-                      }}
-                    >
-                      {screen}
-                    </div>
-                    {/* Content rows */}
-                    <div style={{ marginTop: '12px' }}>
-                      {[1, 2, 3].map((i) => (
-                        <div
-                          key={i}
-                          style={{
-                            height: '30px',
-                            backgroundColor: '#E5E7EB',
-                            borderRadius: '4px',
-                            marginBottom: '8px'
-                          }}
-                        ></div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                <img
+                  src={shot.src}
+                  alt={shot.alt}
+                  loading="lazy"
+                  className="w-full h-[220px] object-cover transition-transform duration-300 ease-out hover:scale-[1.03]"
+                />
+              </motion.button>
             ))}
           </div>
         </div>

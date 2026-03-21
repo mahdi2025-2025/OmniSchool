@@ -105,7 +105,7 @@ export function ProductCardsSection() {
 										borderRadius: '14px',
 										boxShadow: '0 14px 30px rgba(0,0,0,0.10)',
 										background: 'transparent',
-									}}
+									}} 
 								/>
 
 								{/* Soft gradient for readability */}

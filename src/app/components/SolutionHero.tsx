@@ -1,15 +1,63 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router';
+import bgImage from '../../assets/bg.png';
+import dashboardAdminImg from '../../assets/1.jpg';
+import emploiDuTempsImg from '../../assets/2.jpg';
+import appEnseignantImg from '../../assets/3.jpg';
+import appParentImg from '../../assets/4.jpg';
+import './SolutionHero.css';
 
 export function SolutionHero() {
   return (
-    <section className="relative overflow-hidden py-32 px-6" style={{ backgroundColor: '#F9F9F7' }}>
+    <section
+      style={{ backgroundColor: '#F9F9F7' }}
+      className="relative overflow-hidden py-32 px-6"
+    >
+      {/* Full-cover background image (CLEAR). Readability is handled by overlays. */}
+      <div className="absolute inset-0" style={{ zIndex: 0 }}>
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url(${bgImage})`,
+            backgroundRepeat: 'no-repeat',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            filter: 'none',
+            transform: 'none',
+            opacity: 1,
+            imageRendering: 'auto',
+          }}
+        />
+
+        {/* Readability overlay (match HeroSection styling) */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(90deg, rgba(249,249,247,0.92) 0%, rgba(249,249,247,0.80) 42%, rgba(249,249,247,0.15) 100%),' +
+              'radial-gradient(900px 500px at 22% 28%, rgba(45, 71, 44, 0.12) 0%, rgba(45, 71, 44, 0.00) 65%),' +
+              'radial-gradient(700px 420px at 78% 18%, rgba(197, 160, 89, 0.16) 0%, rgba(197, 160, 89, 0.00) 70%)',
+          }}
+        />
+
+        {/* Subtle noise/texture */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage:
+              'radial-gradient(circle at 10% 10%, rgba(0,0,0,0.04) 0, rgba(0,0,0,0.00) 45%), radial-gradient(circle at 90% 20%, rgba(0,0,0,0.035) 0, rgba(0,0,0,0.00) 40%)',
+            mixBlendMode: 'multiply',
+            opacity: 0.25,
+          }}
+        />
+      </div>
+
       {/* Decorative Circles */}
-      <div 
+      <div
         className="absolute -top-48 -right-48 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{ backgroundColor: 'rgba(45, 71, 44, 0.06)' }}
       />
-      <div 
+      <div
         className="absolute -bottom-32 -left-32 w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{ backgroundColor: 'rgba(45, 71, 44, 0.06)' }}
       />
@@ -24,14 +72,14 @@ export function SolutionHero() {
             className="space-y-5"
           >
             {/* Label */}
-            <div 
-              style={{ 
+            <div
+              style={{
                 fontFamily: 'Inter, sans-serif',
                 fontSize: '11px',
                 letterSpacing: '0.15em',
                 color: '#C5A059',
                 textTransform: 'uppercase',
-                fontWeight: '600'
+                fontWeight: '600',
               }}
             >
               SOLUTION COMPLÈTE
@@ -39,28 +87,29 @@ export function SolutionHero() {
 
             {/* Title */}
             <h1
-              style={{ 
-                fontFamily: 'Montserrat, sans-serif', 
-                fontSize: '48px', 
-                fontWeight: '900', 
+              style={{
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: '48px',
+                fontWeight: '900',
                 color: '#333333',
                 lineHeight: '1.1',
-                maxWidth: '480px'
+                maxWidth: '480px',
               }}
             >
               Des Processus Digitaux pour Toute l'École
             </h1>
 
             {/* Subtitle */}
-            <p 
-              style={{ 
-                fontSize: '16px', 
-                color: '#6B7280', 
+            <p
+              style={{
+                fontSize: '16px',
+                color: '#6B7280',
                 lineHeight: '1.6',
-                maxWidth: '420px'
+                maxWidth: '420px',
               }}
             >
-              Une plateforme complète qui supporte élèves, parents, enseignants et administration — à chaque étape de la vie scolaire.
+              Une plateforme complète qui supporte élèves, parents, enseignants et
+              administration — à chaque étape de la vie scolaire.
             </p>
 
             {/* CTA Button */}
@@ -77,7 +126,7 @@ export function SolutionHero() {
                     fontSize: '15px',
                     paddingLeft: '24px',
                     paddingRight: '24px',
-                    fontFamily: 'Inter, sans-serif'
+                    fontFamily: 'Inter, sans-serif',
                   }}
                 >
                   Réserver une Démo
@@ -87,67 +136,22 @@ export function SolutionHero() {
           </motion.div>
 
           {/* Right Side - Floating Mockup Cards */}
-          <div className="relative h-[600px]">
+          <div className="solution-hero-cards">
             {/* Card 1 - Dashboard Admin (Top Left) */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-              className="absolute top-8 left-0 overflow-hidden"
-              style={{
-                width: '280px',
-                height: '190px',
-                backgroundColor: 'white',
-                borderRadius: '12px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
-                transform: 'rotate(-1deg)'
-              }}
+              className="solution-hero-card solution-hero-card--lg"
+              style={{ top: '28px', left: 0, transform: 'rotate(-1deg)' }}
             >
-              {/* Header */}
-              <div className="h-8 flex items-center justify-between px-3" style={{ backgroundColor: '#2D472C' }}>
-                <div className="flex gap-1.5">
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.8)' }} />
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.8)' }} />
-                  <div className="w-2 h-2 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.8)' }} />
-                </div>
-                <div className="w-5 h-5 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.8)' }} />
-              </div>
-              
-              {/* Body with Sidebar */}
-              <div className="flex h-[calc(100%-32px)]">
-                {/* Sidebar */}
-                <div className="w-12 p-2 space-y-2" style={{ backgroundColor: '#1E3318' }}>
-                  {[1, 2, 3, 4].map((i) => (
-                    <div key={i} className="h-1.5 rounded" style={{ backgroundColor: 'rgba(255,255,255,0.6)' }} />
-                  ))}
-                </div>
-                {/* Content */}
-                <div className="flex-1 p-4 space-y-2">
-                  {[1, 2, 3, 4].map((i) => (
-                    <div 
-                      key={i} 
-                      className="h-2 rounded" 
-                      style={{ 
-                        backgroundColor: '#E5E7EB',
-                        width: i === 1 ? '70%' : i === 2 ? '90%' : i === 3 ? '60%' : '85%'
-                      }} 
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* Label Badge */}
-              <div 
-                className="absolute bottom-3 left-3 px-3 py-2"
-                style={{
-                  backgroundColor: '#2D472C',
-                  color: 'white',
-                  borderRadius: '8px',
-                  fontSize: '12px',
-                  fontFamily: 'Inter, sans-serif',
-                  fontWeight: '600'
-                }}
-              >
+              <img
+                src={dashboardAdminImg}
+                alt="Dashboard Admin"
+                className="solution-hero-card__img"
+              />
+              <div className="solution-hero-card__shine" />
+              <div className="solution-hero-card__badge solution-hero-card__badge--green">
                 Dashboard Admin
               </div>
             </motion.div>
@@ -157,46 +161,16 @@ export function SolutionHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.3 }}
-              className="absolute top-0 right-8 overflow-hidden"
-              style={{
-                width: '260px',
-                height: '180px',
-                backgroundColor: 'white',
-                borderRadius: '12px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
-                transform: 'rotate(2deg)'
-              }}
+              className="solution-hero-card solution-hero-card--md"
+              style={{ top: 0, right: '18px', transform: 'rotate(2deg)' }}
             >
-              {/* Header */}
-              <div className="h-8" style={{ backgroundColor: '#2D472C' }} />
-              
-              {/* Schedule Grid */}
-              <div className="p-3">
-                <div className="grid grid-cols-5 gap-1.5">
-                  {[...Array(20)].map((_, i) => (
-                    <div 
-                      key={i} 
-                      className="h-5 rounded"
-                      style={{ 
-                        backgroundColor: i % 3 === 0 ? '#2D472C' : i % 3 === 1 ? '#C5A059' : '#E5E7EB'
-                      }} 
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* Label Badge */}
-              <div 
-                className="absolute bottom-3 left-3 px-3 py-2"
-                style={{
-                  backgroundColor: '#C5A059',
-                  color: '#2D472C',
-                  borderRadius: '8px',
-                  fontSize: '12px',
-                  fontFamily: 'Inter, sans-serif',
-                  fontWeight: '600'
-                }}
-              >
+              <img
+                src={emploiDuTempsImg}
+                alt="Emploi du Temps IA"
+                className="solution-hero-card__img"
+              />
+              <div className="solution-hero-card__shine" />
+              <div className="solution-hero-card__badge solution-hero-card__badge--gold">
                 Emploi du Temps IA
               </div>
             </motion.div>
@@ -206,61 +180,16 @@ export function SolutionHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.4 }}
-              className="absolute bottom-20 left-16 overflow-hidden"
-              style={{
-                width: '140px',
-                height: '240px',
-                backgroundColor: 'white',
-                borderRadius: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
-                transform: 'rotate(-2deg)'
-              }}
+              className="solution-hero-card solution-hero-card--phone"
+              style={{ bottom: '84px', left: '72px', transform: 'rotate(-2deg)' }}
             >
-              {/* Mobile Header */}
-              <div className="h-10 flex flex-col justify-center items-center px-3" style={{ backgroundColor: '#2D472C' }}>
-                <div className="flex gap-1 mb-1.5">
-                  <div className="w-1 h-1 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.5)' }} />
-                  <div className="w-1 h-1 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.5)' }} />
-                </div>
-              </div>
-              
-              {/* Content */}
-              <div className="p-3 space-y-2 flex-1">
-                {[1, 2, 3].map((i) => (
-                  <div 
-                    key={i} 
-                    className="p-2 rounded space-y-1"
-                    style={{ backgroundColor: '#F5F5F5' }}
-                  >
-                    <div className="h-1 rounded" style={{ backgroundColor: '#E5E7EB', width: '80%' }} />
-                    <div className="h-1 rounded" style={{ backgroundColor: '#E5E7EB', width: '60%' }} />
-                  </div>
-                ))}
-              </div>
-
-              {/* Bottom Nav */}
-              <div className="h-8 flex justify-around items-center px-3 border-t" style={{ borderColor: '#E5E7EB' }}>
-                {[1, 2, 3].map((i) => (
-                  <div 
-                    key={i} 
-                    className="w-1.5 h-1.5 rounded-full" 
-                    style={{ backgroundColor: i === 1 ? '#2D472C' : '#E5E7EB' }} 
-                  />
-                ))}
-              </div>
-
-              {/* Label Badge */}
-              <div 
-                className="absolute bottom-3 left-3 px-2 py-1.5"
-                style={{
-                  backgroundColor: '#2D472C',
-                  color: 'white',
-                  borderRadius: '8px',
-                  fontSize: '11px',
-                  fontFamily: 'Inter, sans-serif',
-                  fontWeight: '600'
-                }}
-              >
+              <img
+                src={appEnseignantImg}
+                alt="App Enseignant"
+                className="solution-hero-card__img"
+              />
+              <div className="solution-hero-card__shine" />
+              <div className="solution-hero-card__badge solution-hero-card__badge--green">
                 App Enseignant
               </div>
             </motion.div>
@@ -270,61 +199,16 @@ export function SolutionHero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.5 }}
-              className="absolute bottom-8 right-4 overflow-hidden"
-              style={{
-                width: '140px',
-                height: '240px',
-                backgroundColor: 'white',
-                borderRadius: '20px',
-                boxShadow: '0 8px 32px rgba(0,0,0,0.10)',
-                transform: 'rotate(1deg)'
-              }}
+              className="solution-hero-card solution-hero-card--phone"
+              style={{ bottom: '20px', right: '12px', transform: 'rotate(1deg)' }}
             >
-              {/* Mobile Header */}
-              <div className="h-10 flex flex-col justify-center items-center px-3" style={{ backgroundColor: '#C5A059' }}>
-                <div className="flex gap-1 mb-1.5">
-                  <div className="w-1 h-1 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.5)' }} />
-                  <div className="w-1 h-1 rounded-full" style={{ backgroundColor: 'rgba(255,255,255,0.5)' }} />
-                </div>
-              </div>
-              
-              {/* Content */}
-              <div className="p-3 space-y-2 flex-1">
-                {[1, 2].map((i) => (
-                  <div 
-                    key={i} 
-                    className="p-3 rounded space-y-2"
-                    style={{ backgroundColor: '#F5F5F5' }}
-                  >
-                    <div className="h-6 rounded" style={{ backgroundColor: '#E5E7EB' }} />
-                    <div className="h-1 rounded" style={{ backgroundColor: '#E5E7EB', width: '70%' }} />
-                  </div>
-                ))}
-              </div>
-
-              {/* Bottom Nav */}
-              <div className="h-8 flex justify-around items-center px-3 border-t" style={{ borderColor: '#E5E7EB' }}>
-                {[1, 2, 3].map((i) => (
-                  <div 
-                    key={i} 
-                    className="w-1.5 h-1.5 rounded-full" 
-                    style={{ backgroundColor: i === 2 ? '#C5A059' : '#E5E7EB' }} 
-                  />
-                ))}
-              </div>
-
-              {/* Label Badge */}
-              <div 
-                className="absolute bottom-3 left-3 px-2 py-1.5"
-                style={{
-                  backgroundColor: '#C5A059',
-                  color: '#2D472C',
-                  borderRadius: '8px',
-                  fontSize: '11px',
-                  fontFamily: 'Inter, sans-serif',
-                  fontWeight: '600'
-                }}
-              >
+              <img
+                src={appParentImg}
+                alt="App Parent"
+                className="solution-hero-card__img"
+              />
+              <div className="solution-hero-card__shine" />
+              <div className="solution-hero-card__badge solution-hero-card__badge--gold">
                 App Parent
               </div>
             </motion.div>

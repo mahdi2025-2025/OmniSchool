@@ -53,7 +53,7 @@ public class DemoRequest {
 
     private String preferredTime;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "demo_request_interests", joinColumns = @JoinColumn(name = "demo_request_id"))
     @Column(name = "interest")
     @Builder.Default
@@ -63,7 +63,7 @@ public class DemoRequest {
     private String message;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     @Builder.Default
     private DemoStatus status = DemoStatus.PENDING;
     /** City of the school (from public booking form). */

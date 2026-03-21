@@ -33,4 +33,3 @@ public interface DemoRequestRepository extends JpaRepository<DemoRequest, Long> 
                             @Param("search") String search,
                             Pageable pageable);
 }
-
