@@ -1,15 +1,18 @@
 import { motion } from 'motion/react';
 import { ToggleRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 import cap8 from '../../assets/cap8.png';
 
-const roles = [
-  'Dashboard Admin',
-  'App Enseignant',
-  'App Parent',
-  'Dashboard Manager',
-];
-
 export function UserRolesSection() {
+  const { t } = useTranslation();
+
+  const roles = [
+    t('home.userRoles.roles.admin'),
+    t('home.userRoles.roles.teacher'),
+    t('home.userRoles.roles.parent'),
+    t('home.userRoles.roles.manager'),
+  ];
+
   return (
     <section className="py-20 px-6" style={{ backgroundColor: 'white' }}>
       <div className="max-w-[1200px] mx-auto">
@@ -33,12 +36,12 @@ export function UserRolesSection() {
                 letterSpacing: '-0.01em'
               }}
             >
-              Conçu pour Chaque Utilisateur
+              {t('home.userRoles.title')}
             </h2>
 
             {/* Subtitle */}
             <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.6' }}>
-              Omnischool s'adapte à chaque rôle dans l'école. Directeur, assistant, enseignant ou parent — chaque utilisateur dispose d'un espace pensé pour ses besoins spécifiques.
+              {t('home.userRoles.subtitle')}
             </p>
 
             {/* Toggle Pills */}

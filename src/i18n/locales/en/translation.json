@@ -81,6 +81,65 @@
         "cta": "Explore the parent app",
         "imageAlt": "Parent app"
       }
+    },
+    "values": {
+      "badge": "COMPLETE SOLUTION",
+      "title": "Digital Processes for the Entire School",
+      "subtitle": "A complete platform that supports students, parents, teachers and administration — at every stage of school life.",
+      "cards": {
+        "simplicity": {
+          "title": "Simplicity",
+          "description": "School management shouldn't be complicated. OmniSchool is designed to be intuitive and easy to use, so teachers and administrators can focus on education rather than technology."
+        },
+        "transparency": {
+          "title": "Transparency",
+          "description": "Accessible information shared between all stakeholders, in real time."
+        },
+        "innovation": {
+          "title": "Innovation",
+          "description": "Modern tools to simplify planning, improve communication, and automate processes."
+        },
+        "trust": {
+          "title": "Trust",
+          "description": "Security, privacy, and role-based access control to protect the school's data."
+        }
+      }
+    },
+    "adminOverview": {
+      "imageAlt": "OmniSchool preview - Administrator",
+      "label": "FOR ADMINISTRATORS",
+      "title": "All School Management in One Place",
+      "description": "Well-designed digital school processes are the foundation of an efficient school. OmniSchool centralizes everything your team needs — students, finance, timetables and communication — in a simple and powerful platform."
+    },
+    "assistantOverview": {
+      "imageAlt": "OmniSchool preview - Assistant",
+      "label": "FOR ASSISTANTS",
+      "title": "All Administration in One Place",
+      "p1": "OmniSchool is a true assistant for administrative teams. Manage all school processes from a centralized space — enrollment, finance, timetables and communication.",
+      "p2": "With student management, teacher management and planning modules, OmniSchool enables smoother workflows, saving time and resources.",
+      "p3": "OmniSchool also provides higher accuracy in data management, creating a reliable and unified information base for all administrative decisions."
+    },
+    "solutionHero": {
+      "badge": "COMPLETE SOLUTION",
+      "title": "Digital Processes for the Entire School",
+      "subtitle": "A complete platform that supports students, parents, teachers and administration — at every stage of school life.",
+      "cta": "Book a demo",
+      "cards": {
+        "admin": { "alt": "Admin dashboard", "badge": "Admin dashboard" },
+        "timetable": { "alt": "AI timetable", "badge": "AI timetable" },
+        "teacher": { "alt": "Teacher app", "badge": "Teacher app" },
+        "parent": { "alt": "Parent app", "badge": "Parent app" }
+      }
+    },
+    "userRoles": {
+      "title": "Built for every user",
+      "subtitle": "OmniSchool adapts to every role in the school. Principal, assistant, teacher or parent — each user gets a space designed for their specific needs.",
+      "roles": {
+        "admin": "Admin dashboard",
+        "teacher": "Teacher app",
+        "parent": "Parent app",
+        "manager": "Manager dashboard"
+      }
     }
   }
 }

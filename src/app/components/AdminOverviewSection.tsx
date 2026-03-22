@@ -1,7 +1,10 @@
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import imhImage from '../../assets/imh.png';
 
 export function AdminOverviewSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 px-6" style={{ backgroundColor: 'white' }}>
       <div className="max-w-[1280px] mx-auto">
@@ -30,7 +33,7 @@ export function AdminOverviewSection() {
             >
               <img
                 src={imhImage}
-                alt="Aperçu Omnischool - Administrateur"
+                alt={t('home.adminOverview.imageAlt')}
                 style={{
                   width: '100%',
                   height: '100%',
@@ -73,7 +76,7 @@ export function AdminOverviewSection() {
                 fontWeight: '600',
               }}
             >
-              POUR L'ADMINISTRATEUR
+              {t('home.adminOverview.label')}
             </div>
 
             {/* Title */}
@@ -87,7 +90,7 @@ export function AdminOverviewSection() {
                 maxWidth: '420px',
               }}
             >
-              Toute la Gestion Scolaire en Un Seul Endroit
+              {t('home.adminOverview.title')}
             </h2>
 
             {/* Description */}
@@ -100,10 +103,7 @@ export function AdminOverviewSection() {
                 paddingTop: '4px',
               }}
             >
-              Des processus scolaires digitaux bien conçus sont la base d'une école
-              efficace. Omnischool centralise tout ce dont votre équipe a besoin —
-              élèves, finances, emploi du temps et communication — dans une
-              plateforme simple et puissante.
+              {t('home.adminOverview.description')}
             </p>
           </motion.div>
         </div>

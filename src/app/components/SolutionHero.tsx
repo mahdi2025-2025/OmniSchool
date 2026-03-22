@@ -1,5 +1,6 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import bgImage from '../../assets/bg.png';
 import dashboardAdminImg from '../../assets/1.jpg';
 import emploiDuTempsImg from '../../assets/2.jpg';
@@ -8,6 +9,8 @@ import appParentImg from '../../assets/4.jpg';
 import './SolutionHero.css';
 
 export function SolutionHero() {
+  const { t } = useTranslation();
+
   return (
     <section
       style={{ backgroundColor: '#F9F9F7' }}
@@ -82,7 +85,7 @@ export function SolutionHero() {
                 fontWeight: '600',
               }}
             >
-              SOLUTION COMPLÈTE
+              {t('home.solutionHero.badge')}
             </div>
 
             {/* Title */}
@@ -96,7 +99,7 @@ export function SolutionHero() {
                 maxWidth: '480px',
               }}
             >
-              Des Processus Digitaux pour Toute l'École
+              {t('home.solutionHero.title')}
             </h1>
 
             {/* Subtitle */}
@@ -108,8 +111,7 @@ export function SolutionHero() {
                 maxWidth: '420px',
               }}
             >
-              Une plateforme complète qui supporte élèves, parents, enseignants et
-              administration — à chaque étape de la vie scolaire.
+              {t('home.solutionHero.subtitle')}
             </p>
 
             {/* CTA Button */}
@@ -129,7 +131,7 @@ export function SolutionHero() {
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >
-                  Réserver une Démo
+                  {t('home.solutionHero.cta')}
                 </button>
               </Link>
             </div>
@@ -147,12 +149,12 @@ export function SolutionHero() {
             >
               <img
                 src={dashboardAdminImg}
-                alt="Dashboard Admin"
+                alt={t('home.solutionHero.cards.admin.alt')}
                 className="solution-hero-card__img"
               />
               <div className="solution-hero-card__shine" />
               <div className="solution-hero-card__badge solution-hero-card__badge--green">
-                Dashboard Admin
+                {t('home.solutionHero.cards.admin.badge')}
               </div>
             </motion.div>
 
@@ -166,12 +168,12 @@ export function SolutionHero() {
             >
               <img
                 src={emploiDuTempsImg}
-                alt="Emploi du Temps IA"
+                alt={t('home.solutionHero.cards.timetable.alt')}
                 className="solution-hero-card__img"
               />
               <div className="solution-hero-card__shine" />
               <div className="solution-hero-card__badge solution-hero-card__badge--gold">
-                Emploi du Temps IA
+                {t('home.solutionHero.cards.timetable.badge')}
               </div>
             </motion.div>
 
@@ -185,12 +187,12 @@ export function SolutionHero() {
             >
               <img
                 src={appEnseignantImg}
-                alt="App Enseignant"
+                alt={t('home.solutionHero.cards.teacher.alt')}
                 className="solution-hero-card__img"
               />
               <div className="solution-hero-card__shine" />
               <div className="solution-hero-card__badge solution-hero-card__badge--green">
-                App Enseignant
+                {t('home.solutionHero.cards.teacher.badge')}
               </div>
             </motion.div>
 
@@ -204,12 +206,12 @@ export function SolutionHero() {
             >
               <img
                 src={appParentImg}
-                alt="App Parent"
+                alt={t('home.solutionHero.cards.parent.alt')}
                 className="solution-hero-card__img"
               />
               <div className="solution-hero-card__shine" />
               <div className="solution-hero-card__badge solution-hero-card__badge--gold">
-                App Parent
+                {t('home.solutionHero.cards.parent.badge')}
               </div>
             </motion.div>
           </div>

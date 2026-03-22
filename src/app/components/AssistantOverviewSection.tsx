@@ -1,7 +1,10 @@
 import { motion } from 'motion/react';
+import { useTranslation } from 'react-i18next';
 import adminImage from '../../assets/admin.png';
 
 export function AssistantOverviewSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 px-6" style={{ backgroundColor: 'white' }}>
       <div className="max-w-[1280px] mx-auto">
@@ -15,8 +18,8 @@ export function AssistantOverviewSection() {
             className="space-y-4"
           >
             {/* Label */}
-            <div 
-              style={{ 
+            <div
+              style={{
                 fontFamily: 'Inter, sans-serif',
                 fontSize: '11px',
                 letterSpacing: '0.15em',
@@ -25,56 +28,35 @@ export function AssistantOverviewSection() {
                 fontWeight: '600'
               }}
             >
-              POUR L'ASSISTANT
+              {t('home.assistantOverview.label')}
             </div>
 
             {/* Title */}
             <h2
-              style={{ 
-                fontFamily: 'Montserrat, sans-serif', 
-                fontSize: '36px', 
-                fontWeight: '700', 
+              style={{
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: '36px',
+                fontWeight: '700',
                 color: '#333333',
                 lineHeight: '1.2',
                 maxWidth: '420px'
               }}
             >
-              Toute l'Administration en Un Seul Endroit
+              {t('home.assistantOverview.title')}
             </h2>
 
             {/* Paragraphs */}
             <div className="space-y-4 pt-4">
-              <p 
-                style={{ 
-                  fontSize: '15px', 
-                  color: '#6B7280', 
-                  lineHeight: '1.7',
-                  maxWidth: '420px'
-                }}
-              >
-                Omnischool est un véritable assistant pour les équipes administratives. Gérez tous les processus de l'école depuis un espace centralisé — inscriptions, finances, emploi du temps et communication.
+              <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.7', maxWidth: '420px' }}>
+                {t('home.assistantOverview.p1')}
               </p>
 
-              <p 
-                style={{ 
-                  fontSize: '15px', 
-                  color: '#6B7280', 
-                  lineHeight: '1.7',
-                  maxWidth: '420px'
-                }}
-              >
-                Grâce aux modules de gestion des élèves, des enseignants et de la planification, Omnischool permet des flux de travail plus fluides, économisant temps et ressources.
+              <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.7', maxWidth: '420px' }}>
+                {t('home.assistantOverview.p2')}
               </p>
 
-              <p 
-                style={{ 
-                  fontSize: '15px', 
-                  color: '#6B7280', 
-                  lineHeight: '1.7',
-                  maxWidth: '420px'
-                }}
-              >
-                Omnischool vous offre également une précision accrue dans la gestion des données, créant une base d'information fiable et unifiée pour toutes les décisions administratives.
+              <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.7', maxWidth: '420px' }}>
+                {t('home.assistantOverview.p3')}
               </p>
             </div>
           </motion.div>
@@ -103,7 +85,7 @@ export function AssistantOverviewSection() {
             >
               <img
                 src={adminImage}
-                alt="Omnischool - Assistant administratif"
+                alt={t('home.assistantOverview.imageAlt')}
                 style={{
                   width: '100%',
                   height: '100%',

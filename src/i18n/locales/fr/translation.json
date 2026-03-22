@@ -81,6 +81,65 @@
         "cta": "Découvrir l'app parent",
         "imageAlt": "Application Parent"
       }
+    },
+    "values": {
+      "badge": "SOLUTION COMPLÈTE",
+      "title": "Des Processus Digitaux pour Toute l'École",
+      "subtitle": "Une plateforme complète qui supporte élèves, parents, enseignants et administration — à chaque étape de la vie scolaire.",
+      "cards": {
+        "simplicity": {
+          "title": "Simplicité",
+          "description": "La gestion scolaire ne devrait pas être compliquée. OmniSchool est conçu pour être intuitif et facile à utiliser, afin que les enseignants et les administrateurs puissent se concentrer sur l'éducation plutôt que sur la technologie."
+        },
+        "transparency": {
+          "title": "Transparence",
+          "description": "Des informations accessibles et partagées entre tous les acteurs, en temps réel."
+        },
+        "innovation": {
+          "title": "Innovation",
+          "description": "Des outils modernes pour simplifier la planification, améliorer la communication et automatiser les processus."
+        },
+        "trust": {
+          "title": "Confiance",
+          "description": "Sécurité, confidentialité et contrôle des accès par rôle pour protéger les données de l'école."
+        }
+      }
+    },
+    "adminOverview": {
+      "imageAlt": "Aperçu Omnischool - Administrateur",
+      "label": "POUR L'ADMINISTRATEUR",
+      "title": "Toute la Gestion Scolaire en Un Seul Endroit",
+      "description": "Des processus scolaires digitaux bien conçus sont la base d'une école efficace. Omnischool centralise tout ce dont votre équipe a besoin — élèves, finances, emploi du temps et communication — dans une plateforme simple et puissante."
+    },
+    "assistantOverview": {
+      "imageAlt": "Aperçu Omnischool - Assistant",
+      "label": "POUR L'ASSISTANT",
+      "title": "Toute l'Administration en Un Seul Endroit",
+      "p1": "Omnischool est un véritable assistant pour les équipes administratives. Gérez tous les processus de l'école depuis un espace centralisé — inscriptions, finances, emploi du temps et communication.",
+      "p2": "Grâce aux modules de gestion des élèves, des enseignants et de la planification, Omnischool permet des flux de travail plus fluides, économisant temps et ressources.",
+      "p3": "Omnischool vous offre également une précision accrue dans la gestion des données, créant une base d'information fiable et unifiée pour toutes les décisions administratives."
+    },
+    "solutionHero": {
+      "badge": "SOLUTION COMPLÈTE",
+      "title": "Des Processus Digitaux pour Toute l'École",
+      "subtitle": "Une plateforme complète qui supporte élèves, parents, enseignants et administration — à chaque étape de la vie scolaire.",
+      "cta": "Réserver une Démo",
+      "cards": {
+        "admin": { "alt": "Dashboard Admin", "badge": "Dashboard Admin" },
+        "timetable": { "alt": "Emploi du Temps IA", "badge": "Emploi du Temps IA" },
+        "teacher": { "alt": "App Enseignant", "badge": "App Enseignant" },
+        "parent": { "alt": "App Parent", "badge": "App Parent" }
+      }
+    },
+    "userRoles": {
+      "title": "Conçu pour Chaque Utilisateur",
+      "subtitle": "Omnischool s'adapte à chaque rôle dans l'école. Directeur, assistant, enseignant ou parent — chaque utilisateur dispose d'un espace pensé pour ses besoins spécifiques.",
+      "roles": {
+        "admin": "Dashboard Admin",
+        "teacher": "App Enseignant",
+        "parent": "App Parent",
+        "manager": "Dashboard Manager"
+      }
     }
   }
 }
