@@ -1,14 +1,13 @@
 import { motion } from 'motion/react';
 import { Clock, CheckCircle } from 'lucide-react';
 import cap9 from '../../assets/cap9.png';
-
-const stats = [
-  { number: '3x', label: 'Moins de paperasse' },
-  { number: '80%', label: 'Gain de temps' },
-  { number: '100%', label: 'Données centralisées' },
-];
+import { useTranslation } from 'react-i18next';
 
 export function TimeForTeachingSection() {
+  const { t } = useTranslation();
+
+  const stats = t('home.timeForTeaching.stats', { returnObjects: true }) as Array<{ number: string; label: string }>;
+
   return (
     <section className="py-20 px-6" style={{ backgroundColor: '#F9F9F7' }}>
       <div className="max-w-[1200px] mx-auto">
@@ -63,13 +62,13 @@ export function TimeForTeachingSection() {
                   <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: '#34D399' }} />
                 </div>
                 <div className="ml-auto text-[11px]" style={{ color: '#6B7280' }}>
-                  OmniSchool • Enseignants
+                  {t('home.timeForTeaching.mockupTitle')}
                 </div>
               </div>
 
               <img
                 src={cap9}
-                alt="OmniSchool teacher app preview"
+                alt={t('home.timeForTeaching.imageAlt')}
                 className="w-full h-auto"
                 style={{
                   borderRadius: '18px',
@@ -97,7 +96,7 @@ export function TimeForTeachingSection() {
             >
               <Clock size={16} style={{ color: '#2D472C', flexShrink: 0 }} />
               <span style={{ fontSize: '13px', color: '#333333', whiteSpace: 'nowrap' }}>
-                Emploi du temps mis à jour
+                {t('home.timeForTeaching.notifications.timetableUpdated')}
               </span>
             </motion.div>
 
@@ -117,7 +116,7 @@ export function TimeForTeachingSection() {
             >
               <CheckCircle size={16} style={{ color: '#C5A059', flexShrink: 0 }} />
               <span style={{ fontSize: '13px', color: '#333333', whiteSpace: 'nowrap' }}>
-                10 présences enregistrées
+                {t('home.timeForTeaching.notifications.attendanceRecorded')}
               </span>
             </motion.div>
           </motion.div>
@@ -132,28 +131,26 @@ export function TimeForTeachingSection() {
           >
             {/* Title */}
             <h2
-              style={{ 
-                fontFamily: 'Montserrat, sans-serif', 
-                fontSize: '32px', 
-                fontWeight: '700', 
+              style={{
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: '32px',
+                fontWeight: '700',
                 color: '#333333',
                 lineHeight: '1.2',
-                letterSpacing: '-0.01em'
+                letterSpacing: '-0.01em',
               }}
             >
-              Libérez du Temps pour l'Enseignement
+              {t('home.timeForTeaching.title')}
             </h2>
 
             {/* Subtitle */}
-            <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.6' }}>
-              Les enseignants passent trop de temps sur les tâches administratives. Omnischool automatise les présences, les notes et la communication pour que chaque minute compte en classe.
-            </p>
+            <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.6' }}>{t('home.timeForTeaching.subtitle')}</p>
 
             {/* Stats Row */}
             <div className="flex gap-8 pt-8">
               {stats.map((stat, index) => (
                 <motion.div
-                  key={stat.label}
+                  key={`${stat.label}-${index}`}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -161,20 +158,9 @@ export function TimeForTeachingSection() {
                   className="text-center"
                 >
                   {/* Number */}
-                  <div 
-                    style={{ 
-                      fontSize: '28px', 
-                      fontWeight: '700', 
-                      color: '#C5A059',
-                      marginBottom: '4px'
-                    }}
-                  >
-                    {stat.number}
-                  </div>
+                  <div style={{ fontSize: '28px', fontWeight: '700', color: '#C5A059', marginBottom: '4px' }}>{stat.number}</div>
                   {/* Label */}
-                  <div style={{ fontSize: '13px', color: '#6B7280' }}>
-                    {stat.label}
-                  </div>
+                  <div style={{ fontSize: '13px', color: '#6B7280' }}>{stat.label}</div>
                 </motion.div>
               ))}
             </div>

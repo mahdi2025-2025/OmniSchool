@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react';
 import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
-import { Target, Heart, Shield, Users, Play, Coffee, GraduationCap, MapPin, TrendingUp, Zap, Lock } from 'lucide-react';
+import { Target, Heart, Users, Play, Coffee, GraduationCap, MapPin, TrendingUp, Zap, Lock } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 export default function About() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -19,53 +21,26 @@ export default function About() {
   const values = [
     {
       icon: Target,
-      title: 'Simplicité',
-      description: 'La gestion scolaire ne devrait pas être compliquée. OmniSchool est conçu pour être intuitif et facile à utiliser, afin que les enseignants et les administrateurs puissent se concentrer sur l\'éducation plutôt que sur la technologie.'
+      title: t('about.values.simplicity.title'),
+      description: t('about.values.simplicity.description')
     },
     {
       icon: Heart,
-      title: 'Transparence',
-      description: 'Une école moderne repose sur une communication claire. OmniSchool crée un lien direct entre l\'école, les enseignants, les parents et les élèves.'
+      title: t('about.values.transparency.title'),
+      description: t('about.values.transparency.description')
     },
     {
       icon: Zap,
-      title: 'Innovation',
-      description: 'L\'éducation doit évoluer avec la société. OmniSchool utilise des technologies modernes et l\'intelligence artificielle pour automatiser des tâches comme la création des emplois du temps et la communication.'
+      title: t('about.values.innovation.title'),
+      description: t('about.values.innovation.description')
     },
     {
       icon: Lock,
-      title: 'Confiance',
-      description: 'Les données scolaires sont sensibles. OmniSchool est construit avec un fort accent sur la sécurité, la stabilité et la fiabilité.'
+      title: t('about.values.trust.title'),
+      description: t('about.values.trust.description')
     }
   ];
 
-  const stats = [
-    { number: '50+', label: 'Écoles Partenaires' },
-    { number: '10,000+', label: 'Élèves Gérés' },
-    { number: '500+', label: 'Enseignants' },
-    { number: '98%', label: 'Satisfaction Client' }
-  ];
-
-  const team = [
-    {
-      initials: 'MK',
-      name: 'Mohamed Karim',
-      role: 'Co-Fondateur & CEO',
-      bio: 'Vision produit et stratégie'
-    },
-    {
-      initials: 'AB',
-      name: 'Amine Ben Ali',
-      role: 'Co-Fondateur & CTO',
-      bio: 'Architecture technique et IA'
-    },
-    {
-      initials: 'SJ',
-      name: 'Sarra Jebali',
-      role: 'Responsable Produit',
-      bio: 'UX, design et expérience client'
-    }
-  ];
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F9F9F7', fontFamily: 'Inter, sans-serif' }}>
@@ -118,7 +93,7 @@ export default function About() {
                   marginBottom: '16px'
                 }}
               >
-                QUI SOMMES-NOUS
+                {t('about.who.badge')}
               </div>
               <h1
                 style={{
@@ -131,10 +106,10 @@ export default function About() {
                   maxWidth: '460px'
                 }}
               >
-                Le Partenaire Digital des Écoles Tunisiennes
+                {t('about.who.title')}
               </h1>
               <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.7', maxWidth: '420px' }}>
-                Depuis notre création, nous travaillons avec les directeurs et enseignants des écoles privées tunisiennes pour développer la solution de gestion scolaire la plus complète et intuitive du marché.
+                {t('about.who.subtitle')}
               </p>
             </motion.div>
 
@@ -215,7 +190,7 @@ export default function About() {
                     fontFamily: 'Inter, sans-serif'
                   }}
                 >
-                  Découvrez Omnischool en vidéo
+                  {t('about.video.label')}
                 </div>
               </div>
             </motion.div>
@@ -236,13 +211,13 @@ export default function About() {
                   marginBottom: '20px'
                 }}
               >
-                À propos d'Omnischool
+                {t('about.aboutSection.title')}
               </h2>
               <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.7', marginBottom: '16px' }}>
-                Omnischool est une solution leader dans l'administration scolaire et la communication pour les écoles privées tunisiennes. Notre plateforme permet une gestion fluide et efficace de tous les processus administratifs.
+                {t('about.aboutSection.p1')}
               </p>
               <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.7' }}>
-                Nous sommes profondément engagés dans notre mission et cherchons constamment à améliorer et développer nos services pour permettre aux écoles de se concentrer sur leur tâche la plus importante — l'éducation de nos enfants.
+                {t('about.aboutSection.p2')}
               </p>
             </motion.div>
           </div>
@@ -264,7 +239,7 @@ export default function About() {
                 marginBottom: '12px'
               }}
             >
-              NOS VALEURS
+              {t('about.values.badge')}
             </div>
             <h2
               style={{
@@ -274,7 +249,7 @@ export default function About() {
                 color: '#333333'
               }}
             >
-              Ce qui nous Guide
+              {t('about.values.title')}
             </h2>
           </div>
 
@@ -337,13 +312,13 @@ export default function About() {
                   marginBottom: '20px'
                 }}
               >
-                Notre Culture
+                {t('about.culture.title')}
               </h2>
               <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.7', maxWidth: '460px', marginBottom: '16px' }}>
-                Nous croyons qu'Omnischool est un endroit unique et spécial où travailler. Cela vient de la culture que nous chérissons, de nos valeurs et de notre objectif de contribuer à une meilleure éducation en Tunisie.
+                {t('about.culture.p1')}
               </p>
               <p style={{ fontSize: '15px', color: '#6B7280', lineHeight: '1.7', maxWidth: '460px' }}>
-                Nous valorisons la responsabilité, l'engagement et l'humilité. Pour nous, il est important d'avoir une culture d'entreprise chaleureuse et inclusive où chaque membre de l'équipe peut s'épanouir.
+                {t('about.culture.p2')}
               </p>
             </motion.div>
 
@@ -378,6 +353,7 @@ export default function About() {
       <section className="py-24 px-6" style={{ backgroundColor: '#F9F9F7' }}>
         <div className="max-w-[1280px] mx-auto">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Card 1 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -404,10 +380,11 @@ export default function About() {
                 50+
               </div>
               <div style={{ fontSize: '14px', color: '#6B7280', fontFamily: 'Inter, sans-serif' }}>
-                écoles partenaires
+                {t('about.stats.partners')}
               </div>
             </motion.div>
 
+            {/* Card 2 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -434,10 +411,11 @@ export default function About() {
                 12+
               </div>
               <div style={{ fontSize: '14px', color: '#6B7280', fontFamily: 'Inter, sans-serif' }}>
-                gouvernorats couverts
+                {t('about.stats.governorates')}
               </div>
             </motion.div>
 
+            {/* Card 3 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -464,10 +442,11 @@ export default function About() {
                 10+
               </div>
               <div style={{ fontSize: '14px', color: '#6B7280', fontFamily: 'Inter, sans-serif' }}>
-                membres dans l'équipe
+                {t('about.stats.team')}
               </div>
             </motion.div>
 
+            {/* Card 4 */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -494,7 +473,7 @@ export default function About() {
                 5,000+
               </div>
               <div style={{ fontSize: '14px', color: '#6B7280', fontFamily: 'Inter, sans-serif' }}>
-                élèves gérés
+                {t('about.stats.students')}
               </div>
             </motion.div>
           </div>
@@ -513,10 +492,10 @@ export default function About() {
               marginBottom: '16px'
             }}
           >
-            Rejoignez la Communauté Omnischool
+            {t('about.cta.title')}
           </h2>
           <p style={{ fontSize: '16px', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '32px' }}>
-            Des dizaines d'écoles tunisiennes nous font déjà confiance
+            {t('about.cta.subtitle')}
           </p>
           <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <Link to="/book-demo">
@@ -533,7 +512,7 @@ export default function About() {
                   border: 'none'
                 }}
               >
-                Réserver une Démo
+                {t('about.cta.primary')}
               </button>
             </Link>
             <button
@@ -549,7 +528,7 @@ export default function About() {
                 border: '1px solid white'
               }}
             >
-              Nous Contacter
+              {t('about.cta.secondary')}
             </button>
           </div>
         </div>

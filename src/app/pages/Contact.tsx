@@ -7,8 +7,10 @@ import { Link } from 'react-router';
 import { apiPost } from '../lib/api';
 import c1Image from '../../assets/c1.png';
 import './Contact.css';
+import { useTranslation } from 'react-i18next';
 
 export default function Contact() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -70,20 +72,20 @@ export default function Contact() {
 
   const faqs = [
     {
-      question: 'Combien de temps dure une démo?',
-      answer: 'Nos démonstrations durent environ 30 minutes. Nous vous présentons la plateforme et répondons à toutes vos questions.',
+      question: t('contact.page.faq.items.0.q'),
+      answer: t('contact.page.faq.items.0.a'),
     },
     {
-      question: 'La démo est-elle vraiment gratuite?',
-      answer: 'Oui, absolument. La démonstration est entièrement gratuite et sans engagement de votre part.',
+      question: t('contact.page.faq.items.1.q'),
+      answer: t('contact.page.faq.items.1.a'),
     },
     {
-      question: 'Combien de temps faut-il pour mettre en place Omnischool?',
-      answer: 'La mise en place prend généralement 1 à 2 semaines selon la taille de l\'école. Notre équipe vous accompagne à chaque étape.',
+      question: t('contact.page.faq.items.2.q'),
+      answer: t('contact.page.faq.items.2.a'),
     },
     {
-      question: 'Proposez-vous un support en arabe et en français?',
-      answer: 'Oui, notre plateforme et notre équipe support sont disponibles en arabe et en français.',
+      question: t('contact.page.faq.items.3.q'),
+      answer: t('contact.page.faq.items.3.a'),
     },
   ];
 
@@ -140,7 +142,7 @@ export default function Contact() {
                   marginBottom: '20px',
                 }}
               >
-                Nous Sommes Impatients de vous Entendre!
+                {t('contact.page.heroTitle')}
               </h1>
               <p
                 style={{
@@ -150,9 +152,7 @@ export default function Contact() {
                   maxWidth: '420px',
                 }}
               >
-                Nous apprécions votre visite et avons hâte de vous entendre. Si vous avez des questions, des
-                suggestions ou des commentaires, n'hésitez pas à contacter notre équipe. Nous serons ravis de
-                vous aider.
+                {t('contact.page.heroSubtitle')}
               </p>
             </motion.div>
 
@@ -163,11 +163,11 @@ export default function Contact() {
               transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
               className="contact-hero-media"
             >
-              <img src={c1Image} alt="Contact Us" className="contact-hero-media__img" />
+              <img src={c1Image} alt={t('contact.hero.imageAlt')} className="contact-hero-media__img" />
               <div className="contact-hero-media__overlay" />
               <div className="contact-hero-media__badges">
-                <span className="contact-hero-media__badgePrimary">Contactez-nous</span>
-                <span className="contact-hero-media__badgeSecondary">Nous sommes là pour vous aider</span>
+                <span className="contact-hero-media__badgePrimary">{t('contact.hero.badgePrimary')}</span>
+                <span className="contact-hero-media__badgeSecondary">{t('contact.hero.badgeSecondary')}</span>
               </div>
             </motion.div>
           </div>
@@ -178,7 +178,7 @@ export default function Contact() {
       <section style={{ backgroundColor: 'white', paddingTop: '60px', paddingBottom: '60px' }}>
         <div className="max-w-[1280px] mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-6">
-            {/* Card 1 - Réserver une Démo */}
+            {/* Card 1 - Book a demo */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -205,10 +205,10 @@ export default function Contact() {
                   marginBottom: '12px',
                 }}
               >
-                Réserver une Démo
+                {t('contact.page.cards.demo.title')}
               </h3>
               <p style={{ fontSize: '14px', color: '#6B7280', lineHeight: '1.6', marginBottom: '20px' }}>
-                Découvrez Omnischool en action avec une démonstration gratuite et personnalisée de 30 minutes.
+                {t('contact.page.cards.demo.description')}
               </p>
               <Link to="/book-demo">
                 <button
@@ -225,12 +225,12 @@ export default function Contact() {
                     cursor: 'pointer',
                   }}
                 >
-                  Réserver maintenant →
+                  {t('contact.page.cards.demo.button')}
                 </button>
               </Link>
             </motion.div>
 
-            {/* Card 2 - Contacter les Ventes */}
+            {/* Card 2 - Sales */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -257,11 +257,10 @@ export default function Contact() {
                   marginBottom: '12px',
                 }}
               >
-                Contacter les Ventes
+                {t('contact.page.cards.sales.title')}
               </h3>
               <p style={{ fontSize: '14px', color: '#6B7280', lineHeight: '1.6', marginBottom: '20px' }}>
-                Parlez à notre équipe commerciale pour en savoir plus sur nos offres et tarifs adaptés à votre
-                école.
+                {t('contact.page.cards.sales.description')}
               </p>
               <button
                 className="transition-all duration-200"
@@ -285,11 +284,11 @@ export default function Contact() {
                   e.currentTarget.style.color = '#2D472C';
                 }}
               >
-                Nous écrire →
+                {t('contact.page.cards.sales.button')}
               </button>
             </motion.div>
 
-            {/* Card 3 - Support Technique */}
+            {/* Card 3 - Support */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -316,11 +315,10 @@ export default function Contact() {
                   marginBottom: '12px',
                 }}
               >
-                Support Technique
+                {t('contact.page.cards.support.title')}
               </h3>
               <p style={{ fontSize: '14px', color: '#6B7280', lineHeight: '1.6', marginBottom: '20px' }}>
-                Vous êtes déjà client ? Notre équipe support est disponible pour vous aider du lundi au
-                vendredi.
+                {t('contact.page.cards.support.description')}
               </p>
               <button
                 className="transition-all duration-200"
@@ -344,7 +342,7 @@ export default function Contact() {
                   e.currentTarget.style.color = '#2D472C';
                 }}
               >
-                Accéder au support →
+                {t('contact.page.cards.support.button')}
               </button>
             </motion.div>
           </div>
@@ -381,7 +379,7 @@ export default function Contact() {
                         marginBottom: '24px',
                       }}
                     >
-                      Envoyez-nous un Message
+                      {t('contact.page.form.title')}
                     </h2>
 
                     <form onSubmit={handleSubmit}>
@@ -392,7 +390,7 @@ export default function Contact() {
                             style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
                             htmlFor="firstName"
                           >
-                            Prénom
+                            {t('contact.page.form.firstName.label')}
                           </label>
                           <input
                             type="text"
@@ -401,7 +399,7 @@ export default function Contact() {
                             required
                             value={formData.firstName}
                             onChange={handleInputChange}
-                            placeholder="Votre prénom"
+                            placeholder={t('contact.page.form.firstName.placeholder')}
                             style={{
                               width: '100%',
                               height: '40px',
@@ -421,7 +419,7 @@ export default function Contact() {
                             style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
                             htmlFor="lastName"
                           >
-                            Nom
+                            {t('contact.page.form.lastName.label')}
                           </label>
                           <input
                             type="text"
@@ -430,7 +428,7 @@ export default function Contact() {
                             required
                             value={formData.lastName}
                             onChange={handleInputChange}
-                            placeholder="Votre nom"
+                            placeholder={t('contact.page.form.lastName.placeholder')}
                             style={{
                               width: '100%',
                               height: '40px',
@@ -454,7 +452,7 @@ export default function Contact() {
                             style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
                             htmlFor="email"
                           >
-                            Email
+                            {t('contact.page.form.email.label')}
                           </label>
                           <input
                             type="email"
@@ -463,7 +461,7 @@ export default function Contact() {
                             required
                             value={formData.email}
                             onChange={handleInputChange}
-                            placeholder="votre@email.com"
+                            placeholder={t('contact.page.form.email.placeholder')}
                             style={{
                               width: '100%',
                               height: '40px',
@@ -483,7 +481,7 @@ export default function Contact() {
                             style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
                             htmlFor="phone"
                           >
-                            Téléphone
+                            {t('contact.page.form.phone.label')}
                           </label>
                           <input
                             type="tel"
@@ -492,7 +490,7 @@ export default function Contact() {
                             required
                             value={formData.phone}
                             onChange={handleInputChange}
-                            placeholder="+216 XX XXX XXX"
+                            placeholder={t('contact.page.form.phone.placeholder')}
                             style={{
                               width: '100%',
                               height: '40px',
@@ -515,7 +513,7 @@ export default function Contact() {
                           style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
                           htmlFor="subject"
                         >
-                          Sujet
+                          {t('contact.page.form.subject.label')}
                         </label>
                         <select
                           id="subject"
@@ -537,13 +535,13 @@ export default function Contact() {
                           onFocus={(e) => (e.target.style.borderColor = '#2D472C')}
                           onBlur={(e) => (e.target.style.borderColor = '#E5E7EB')}
                         >
-                          <option value="">Sélectionner un sujet...</option>
-                          <option value="demo">Demande de démo</option>
-                          <option value="features">Question sur les fonctionnalités</option>
-                          <option value="pricing">Tarifs et offres</option>
-                          <option value="support">Support technique</option>
-                          <option value="partnership">Partenariat</option>
-                          <option value="other">Autre</option>
+                          <option value="">{t('contact.page.form.subject.placeholder')}</option>
+                          <option value="demo">{t('contact.page.form.subject.options.demo')}</option>
+                          <option value="features">{t('contact.page.form.subject.options.features')}</option>
+                          <option value="pricing">{t('contact.page.form.subject.options.pricing')}</option>
+                          <option value="support">{t('contact.page.form.subject.options.support')}</option>
+                          <option value="partnership">{t('contact.page.form.subject.options.partnership')}</option>
+                          <option value="other">{t('contact.page.form.subject.options.other')}</option>
                         </select>
                       </div>
 
@@ -553,7 +551,7 @@ export default function Contact() {
                           style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
                           htmlFor="message"
                         >
-                          Message
+                          {t('contact.page.form.message.label')}
                         </label>
                         <textarea
                           id="message"
@@ -561,7 +559,7 @@ export default function Contact() {
                           required
                           value={formData.message}
                           onChange={handleInputChange}
-                          placeholder="Comment pouvons-nous vous aider?"
+                          placeholder={t('contact.page.form.message.placeholder')}
                           rows={5}
                           style={{
                             width: '100%',
@@ -621,7 +619,7 @@ export default function Contact() {
                           e.currentTarget.style.opacity = isSubmitting ? '0.85' : '1';
                         }}
                       >
-                        {isSubmitting ? 'Envoi...' : 'Envoyer le Message →'}
+                        {isSubmitting ? t('contact.page.form.submitting') : t('contact.page.form.submit')}
                       </button>
                     </form>
                   </>
@@ -638,10 +636,10 @@ export default function Contact() {
                         marginBottom: '12px',
                       }}
                     >
-                      Message Envoyé!
+                      {t('contact.page.success.title')}
                     </h2>
                     <p style={{ fontSize: '15px', color: '#6B7280', marginBottom: '32px' }}>
-                      Merci pour votre message. Notre équipe vous répondra dans les plus brefs délais.
+                      {t('contact.page.success.subtitle')}
                     </p>
                     <Link to="/">
                       <button
@@ -665,7 +663,7 @@ export default function Contact() {
                           e.currentTarget.style.color = '#2D472C';
                         }}
                       >
-                        Retour à l'accueil
+                        {t('contact.page.success.backHome')}
                       </button>
                     </Link>
                   </div>
@@ -689,7 +687,7 @@ export default function Contact() {
                   marginBottom: '24px',
                 }}
               >
-                Nos Coordonnées
+                {t('contact.page.info.title')}
               </h2>
 
               {/* Contact Info Rows */}
@@ -708,9 +706,9 @@ export default function Contact() {
                           marginBottom: '4px',
                         }}
                       >
-                        Adresse
+                        {t('contact.page.info.addressLabel')}
                       </div>
-                      <div style={{ fontSize: '14px', color: '#6B7280' }}>Tunis, Tunisie</div>
+                      <div style={{ fontSize: '14px', color: '#6B7280' }}>{t('contact.page.info.addressValue')}</div>
                     </div>
                   </div>
                 </div>
@@ -729,7 +727,7 @@ export default function Contact() {
                           marginBottom: '4px',
                         }}
                       >
-                        Email
+                        {t('contact.page.info.emailLabel')}
                       </div>
                       <div style={{ fontSize: '14px', color: '#6B7280' }}>contact@omnischool.tn</div>
                     </div>
@@ -750,7 +748,7 @@ export default function Contact() {
                           marginBottom: '4px',
                         }}
                       >
-                        Téléphone
+                        {t('contact.page.info.phoneLabel')}
                       </div>
                       <div style={{ fontSize: '14px', color: '#6B7280' }}>+216 XX XXX XXX</div>
                     </div>
@@ -771,9 +769,9 @@ export default function Contact() {
                           marginBottom: '4px',
                         }}
                       >
-                        Horaires
+                        {t('contact.page.info.hoursLabel')}
                       </div>
-                      <div style={{ fontSize: '14px', color: '#6B7280' }}>Lun — Ven: 8h00 — 17h00</div>
+                      <div style={{ fontSize: '14px', color: '#6B7280' }}>{t('contact.page.info.hoursValue')}</div>
                     </div>
                   </div>
                 </div>
@@ -877,9 +875,9 @@ export default function Contact() {
               marginBottom: '8px',
             }}
           >
-            Retrouvez-nous
+            {t('contact.page.map.title')}
           </h2>
-          <p style={{ fontSize: '14px', color: '#6B7280', marginBottom: '24px' }}>Tunis, Tunisie</p>
+          <p style={{ fontSize: '14px', color: '#6B7280', marginBottom: '24px' }}>{t('contact.page.map.subtitle')}</p>
         </div>
         <div style={{ borderTop: '1px solid #E5E7EB', borderBottom: '1px solid #E5E7EB' }}>
           <iframe
@@ -907,7 +905,7 @@ export default function Contact() {
               marginBottom: '40px',
             }}
           >
-            Questions Fréquentes
+            {t('contact.page.faq.title')}
           </h2>
 
           <div style={{ maxWidth: '800px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '12px' }}>

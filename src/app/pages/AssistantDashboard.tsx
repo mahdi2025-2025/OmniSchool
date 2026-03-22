@@ -4,6 +4,7 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Users, ClipboardCheck, Calendar, FileText, Mail, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import dash1 from '../../assets/dash1.png';
 import dash2 from '../../assets/dash2.jpg';
 import dash3 from '../../assets/dash3.jpg';
@@ -16,6 +17,7 @@ import dash9 from '../../assets/dash 9.jpg';
 import dash10 from '../../assets/dash10.jpg';
 
 export default function AssistantDashboard() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [activeShotIndex, setActiveShotIndex] = useState<number | null>(null);
 
@@ -52,24 +54,24 @@ export default function AssistantDashboard() {
   };
 
   const features = [
-    { icon: Users, title: 'Gestion des Élèves', description: 'Inscriptions, dossiers, historique et transferts' },
-    { icon: ClipboardCheck, title: 'Gestion des Enseignants', description: 'Charges horaires, absences et remplacements' },
-    { icon: Calendar, title: 'Emploi du Temps', description: 'Construction et gestion du planning hebdomadaire' },
-    { icon: FileText, title: 'Rapports PDF', description: 'Génération de bulletins, reçus et factures' },
-    { icon: Mail, title: 'Communication', description: 'Annonces, demandes parents et enseignants' },
-    { icon: TrendingUp, title: 'Finance Complète', description: 'Frais scolaires, salaires, fournisseurs et rapports' },
+    { icon: Users, title: t('assistantDashboard.features.students.title'), description: t('assistantDashboard.features.students.description') },
+    { icon: ClipboardCheck, title: t('assistantDashboard.features.teachers.title'), description: t('assistantDashboard.features.teachers.description') },
+    { icon: Calendar, title: t('assistantDashboard.features.timetable.title'), description: t('assistantDashboard.features.timetable.description') },
+    { icon: FileText, title: t('assistantDashboard.features.pdfReports.title'), description: t('assistantDashboard.features.pdfReports.description') },
+    { icon: Mail, title: t('assistantDashboard.features.communication.title'), description: t('assistantDashboard.features.communication.description') },
+    { icon: TrendingUp, title: t('assistantDashboard.features.finance.title'), description: t('assistantDashboard.features.finance.description') },
   ];
 
   const dashboardShots = [
-    { src: dash2, alt: 'Dashboard OmniSchool - Écran 1' },
-    { src: dash3, alt: 'Dashboard OmniSchool - Écran 2' },
-    { src: dash4, alt: 'Dashboard OmniSchool - Écran 3' },
-    { src: dash5, alt: 'Dashboard OmniSchool - Écran 4' },
-    { src: dash6, alt: 'Dashboard OmniSchool - Écran 5' },
-    { src: dash7, alt: 'Dashboard OmniSchool - Écran 6' },
-    { src: dash8, alt: 'Dashboard OmniSchool - Écran 7' },
-    { src: dash9, alt: 'Dashboard OmniSchool - Écran 8' },
-    { src: dash10, alt: 'Dashboard OmniSchool - Écran 9' },
+    { src: dash2, alt: t('assistantDashboard.shots.1') },
+    { src: dash3, alt: t('assistantDashboard.shots.2') },
+    { src: dash4, alt: t('assistantDashboard.shots.3') },
+    { src: dash5, alt: t('assistantDashboard.shots.4') },
+    { src: dash6, alt: t('assistantDashboard.shots.5') },
+    { src: dash7, alt: t('assistantDashboard.shots.6') },
+    { src: dash8, alt: t('assistantDashboard.shots.7') },
+    { src: dash9, alt: t('assistantDashboard.shots.8') },
+    { src: dash10, alt: t('assistantDashboard.shots.9') },
   ];
 
   const activeShot = activeShotIndex !== null ? dashboardShots[activeShotIndex] : null;
@@ -83,13 +85,13 @@ export default function AssistantDashboard() {
         <div
           role="dialog"
           aria-modal="true"
-          aria-label="Aperçu du dashboard"
+          aria-label={t('assistantDashboard.lightbox.ariaLabel')}
           className="fixed inset-0 z-[9999]"
         >
           {/* Backdrop */}
           <button
             type="button"
-            aria-label="Fermer"
+            aria-label={t('assistantDashboard.lightbox.close')}
             className="absolute inset-0 w-full h-full"
             onClick={() => setActiveShotIndex(null)}
             style={{ backgroundColor: 'rgba(17, 24, 39, 0.72)' }}
@@ -119,7 +121,7 @@ export default function AssistantDashboard() {
                     style={{ backgroundColor: '#F3F4F6', color: '#111827' }}
                     onClick={() => setActiveShotIndex((i) => (i === null ? i : (i - 1 + dashboardShots.length) % dashboardShots.length))}
                   >
-                    Précédent
+                    {t('assistantDashboard.lightbox.previous')}
                   </button>
                   <button
                     type="button"
@@ -127,7 +129,7 @@ export default function AssistantDashboard() {
                     style={{ backgroundColor: '#F3F4F6', color: '#111827' }}
                     onClick={() => setActiveShotIndex((i) => (i === null ? i : (i + 1) % dashboardShots.length))}
                   >
-                    Suivant
+                    {t('assistantDashboard.lightbox.next')}
                   </button>
                   <button
                     type="button"
@@ -135,7 +137,7 @@ export default function AssistantDashboard() {
                     style={{ backgroundColor: '#111827', color: 'white' }}
                     onClick={() => setActiveShotIndex(null)}
                   >
-                    Fermer
+                    {t('assistantDashboard.lightbox.close')}
                   </button>
                 </div>
               </div>
@@ -157,7 +159,7 @@ export default function AssistantDashboard() {
                   />
                 </div>
                 <div className="mt-3 text-center text-[12px]" style={{ color: 'rgba(255,255,255,0.7)' }}>
-                  Cliquez à l’extérieur pour fermer • Échap pour fermer • ←/→ pour naviguer
+                  {t('assistantDashboard.lightbox.hint')}
                 </div>
               </div>
             </div>
@@ -186,7 +188,7 @@ export default function AssistantDashboard() {
                   marginBottom: '16px'
                 }}
               >
-                DASHBOARD ASSISTANT
+                {t('assistantDashboard.hero.badge')}
               </div>
               <h1
                 style={{
@@ -198,10 +200,10 @@ export default function AssistantDashboard() {
                   marginBottom: '20px'
                 }}
               >
-                Gérez Toute l'École depuis un Tableau de Bord
+                {t('assistantDashboard.hero.title')}
               </h1>
               <p style={{ fontSize: '16px', color: '#6B7280', lineHeight: '1.6', marginBottom: '32px' }}>
-                Élèves, enseignants, finances, emploi du temps et campus — tout centralisé pour l'assistant administratif.
+                {t('assistantDashboard.hero.subtitle')}
               </p>
               <button
                 className="transition-all duration-200 hover:opacity-90"
@@ -217,7 +219,7 @@ export default function AssistantDashboard() {
                 onClick={scrollToFeatures}
                 type="button"
               >
-                Voir les Fonctionnalités
+                {t('assistantDashboard.hero.ctaFeatures')}
               </button>
             </motion.div>
 
@@ -307,7 +309,7 @@ export default function AssistantDashboard() {
                 marginBottom: '12px'
               }}
             >
-              FONCTIONNALITÉS
+              {t('assistantDashboard.features.badge')}
             </div>
             <h2
               style={{
@@ -317,7 +319,7 @@ export default function AssistantDashboard() {
                 color: '#333333'
               }}
             >
-              Tout ce dont l'Assistant a Besoin
+              {t('assistantDashboard.features.title')}
             </h2>
           </div>
 
@@ -367,7 +369,7 @@ export default function AssistantDashboard() {
                 marginBottom: '12px'
               }}
             >
-              APERÇU
+              {t('assistantDashboard.screens.badge')}
             </div>
             <h2
               style={{
@@ -377,7 +379,7 @@ export default function AssistantDashboard() {
                 color: '#333333'
               }}
             >
-              Les Écrans du Dashboard
+              {t('assistantDashboard.screens.title')}
             </h2>
           </div>
 
@@ -423,10 +425,10 @@ export default function AssistantDashboard() {
               marginBottom: '16px'
             }}
           >
-            Prêt à Simplifier votre Travail?
+            {t('assistantDashboard.cta.title')}
           </h2>
           <p style={{ fontSize: '16px', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '32px' }}>
-            Découvrez comment Omnischool peut transformer la gestion de votre école
+            {t('assistantDashboard.cta.subtitle')}
           </p>
           <Link to="/book-demo">
             <button
@@ -441,7 +443,7 @@ export default function AssistantDashboard() {
                 fontWeight: '600'
               }}
             >
-              Réserver une Démo
+              {t('assistantDashboard.cta.ctaButton')}
             </button>
           </Link>
         </div>

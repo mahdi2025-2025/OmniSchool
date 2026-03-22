@@ -10,8 +10,10 @@ import ens5 from '../../assets/ens5.jpg';
 import ens6 from '../../assets/ens6.jpg';
 import ens7 from '../../assets/ens7.jpg';
 import './appHeroMockup.css';
+import { useTranslation } from 'react-i18next';
 
 export default function TeacherApp() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -29,38 +31,20 @@ export default function TeacherApp() {
 
 
   const screens = [
-    { title: "Calendrier de l'enseignant", image: ens3 },
-    { title: 'Profil enseignant', image: ens4 },
-    { title: 'E-fiche de présence', image: ens5 },
-    { title: 'Publier un homework en ligne', image: ens6 },
-    { title: "Contacter l'administration", image: ens7 },
+    { title: t('teacherApp.screens.calendar'), image: ens3 },
+    { title: t('teacherApp.screens.profile'), image: ens4 },
+    { title: t('teacherApp.screens.attendanceSheet'), image: ens5 },
+    { title: t('teacherApp.screens.homeworkPublish'), image: ens6 },
+    { title: t('teacherApp.screens.contactAdmin'), image: ens7 },
   ];
 
   const teacherFeatures = [
-    {
-      title: 'Présences Intelligentes',
-      description: 'Marquez les présences par classe en quelques secondes',
-    },
-    {
-      title: 'Gestion du Syllabus',
-      description: 'Planifiez et suivez votre programme par matière',
-    },
-    {
-      title: 'Saisie des Notes',
-      description: 'Entrez les notes CC1, CC2 et examens finaux',
-    },
-    {
-      title: 'Publication des Devoirs',
-      description: 'Partagez les devoirs avec les élèves et parents',
-    },
-    {
-      title: 'Emploi du Temps',
-      description: 'Consultez votre planning hebdomadaire en temps réel',
-    },
-    {
-      title: 'Demandes & Requêtes',
-      description: "Soumettez des demandes à l'administration",
-    },
+    { title: t('teacherApp.features.smartAttendance.title'), description: t('teacherApp.features.smartAttendance.description') },
+    { title: t('teacherApp.features.syllabus.title'), description: t('teacherApp.features.syllabus.description') },
+    { title: t('teacherApp.features.grades.title'), description: t('teacherApp.features.grades.description') },
+    { title: t('teacherApp.features.homework.title'), description: t('teacherApp.features.homework.description') },
+    { title: t('teacherApp.features.timetable.title'), description: t('teacherApp.features.timetable.description') },
+    { title: t('teacherApp.features.requests.title'), description: t('teacherApp.features.requests.description') },
   ];
 
   return (
@@ -88,7 +72,7 @@ export default function TeacherApp() {
                   marginBottom: '16px'
                 }}
               >
-                APPLICATION ENSEIGNANT
+                {t('teacherApp.hero.badge')}
               </div>
               <h1
                 style={{ 
@@ -100,10 +84,10 @@ export default function TeacherApp() {
                   marginBottom: '20px'
                 }}
               >
-                L'Application Mobile pour les Enseignants
+                {t('teacherApp.hero.title')}
               </h1>
               <p style={{ fontSize: '16px', color: '#6B7280', lineHeight: '1.6', marginBottom: '32px' }}>
-                OmniSchool - Enseignant est une application mobile complète pour enseignants offrant une gestion holistique de la classe. Elle permet de suivre les présences intelligemment avec reconnaissance de motifs et alertes automatiques, de planifier et gérer le syllabus avec progression en temps réel, et de maintenir un répertoire détaillé des étudiants avec historique académique. Les enseignants peuvent publier des devoirs avec pièces jointes et suivre les soumissions, organiser leur emploi du temps via un calendrier intelligent synchronisé, et gérer toutes les requêtes administratives (congés, certificats, recommandations). L'application intègre également la saisie rapide de notes avec validation, un centre de notifications intelligent pour communications urgentes et rappels, ainsi qu'un profil professionnel personnalisable avec historique de carrière et certifications. Le tout est conçu avec le design system Omni pour une expérience utilisateur cohérente et intuitive.
+                {t('teacherApp.hero.description')}
               </p>
               <button
                 className="transition-all duration-200 hover:opacity-90"
@@ -119,7 +103,7 @@ export default function TeacherApp() {
                 onClick={scrollToFeatures}
                 type="button"
               >
-                Voir les Fonctionnalités
+                {t('teacherApp.hero.ctaFeatures')}
               </button>
             </motion.div>
 
@@ -138,13 +122,13 @@ export default function TeacherApp() {
                       <span className="omni-hero-mockup__dot omni-hero-mockup__dot--yellow" />
                       <span className="omni-hero-mockup__dot omni-hero-mockup__dot--green" />
                     </div>
-                    <div className="omni-hero-mockup__title">OmniSchool • Enseignants</div>
+                    <div className="omni-hero-mockup__title">{t('teacherApp.hero.mockupTitle')}</div>
                   </div>
 
                   <div className="omni-hero-mockup__media">
                     <img
                       src={ens1}
-                      alt="Application Enseignant OmniSchool"
+                      alt={t('teacherApp.hero.imageAlt')}
                       className="omni-hero-mockup__img"
                     />
                   </div>
@@ -170,7 +154,7 @@ export default function TeacherApp() {
                 marginBottom: '12px'
               }}
             >
-              FONCTIONNALITÉS
+              {t('teacherApp.featuresSection.badge')}
             </div>
             <h2
               style={{ 
@@ -180,7 +164,7 @@ export default function TeacherApp() {
                 color: '#333333'
               }}
             >
-              Tout ce dont l'Enseignant a Besoin
+              {t('teacherApp.featuresSection.title')}
             </h2>
           </div>
 
@@ -243,7 +227,7 @@ export default function TeacherApp() {
                 marginBottom: '12px'
               }}
             >
-              APERÇU
+              {t('teacherApp.preview.badge', { defaultValue: 'APERÇU' })}
             </div>
             <h2
               style={{ 
@@ -253,7 +237,7 @@ export default function TeacherApp() {
                 color: '#333333'
               }}
             >
-              Les Écrans de l'Application
+              {t('teacherApp.preview.title', { defaultValue: "Les Écrans de l'Application" })}
             </h2>
           </div>
 
@@ -341,10 +325,10 @@ export default function TeacherApp() {
               marginBottom: '16px'
             }}
           >
-            Prêt à Simplifier votre Travail?
+            {t('teacherApp.cta.title')}
           </h2>
           <p style={{ fontSize: '16px', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '32px' }}>
-            Découvrez comment Omnischool peut transformer votre quotidien d'enseignant
+            {t('teacherApp.cta.description')}
           </p>
           <Link to="/book-demo">
             <button
@@ -359,7 +343,7 @@ export default function TeacherApp() {
                 fontWeight: '600'
               }}
             >
-              Réserver une Démo
+              {t('teacherApp.cta.ctaText')}
             </button>
           </Link>
         </div>

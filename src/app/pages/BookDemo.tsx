@@ -5,8 +5,10 @@ import { Footer } from '../components/Footer';
 import { CheckCircle, Mail, Phone, MapPin, LayoutDashboard, GraduationCap, Users, BarChart2 } from 'lucide-react';
 import { Link } from 'react-router';
 import { API_BASE_URL } from '../lib/api';
+import { useTranslation } from 'react-i18next';
 
 export default function BookDemo() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -45,22 +47,23 @@ export default function BookDemo() {
     // Backend expects Tunisian format: exactly 8 digits (no +216)
     const normalizedPhone = formData.phone.replace(/\s+/g, '').replace(/^\+216/, '');
     if (!/^\d{8}$/.test(normalizedPhone)) {
-      setSubmitError('Téléphone invalide. Utilisez 8 chiffres (format تونس: 12345678).');
+      setSubmitError(t('bookDemo.form.errors.invalidPhone'));
       return;
     }
 
     const interestedIn = Object.entries(formData.apps)
       .filter(([, v]) => v)
       .map(([k]) => {
+        // Send stable EN identifiers to backend (not translated labels)
         switch (k) {
           case 'assistant':
-            return 'Dashboard Assistant';
+            return 'Assistant Dashboard';
           case 'teacher':
-            return 'App Enseignant';
+            return 'Teacher App';
           case 'parent':
-            return 'App Parent';
+            return 'Parent App';
           case 'manager':
-            return 'Dashboard Manager';
+            return 'Manager Dashboard';
           default:
             return k;
         }
@@ -111,13 +114,13 @@ export default function BookDemo() {
 
       if (!res.ok) {
         const errBody = await res.json().catch(() => null);
-        const msg = errBody?.message || errBody?.error || `Erreur serveur (${res.status})`;
+        const msg = errBody?.message || errBody?.error || t('bookDemo.form.errors.serverError', { status: res.status });
         throw new Error(msg);
       }
 
       setFormSubmitted(true);
     } catch (err) {
-      setSubmitError(err instanceof Error ? err.message : 'Erreur lors de l’envoi.');
+      setSubmitError(err instanceof Error ? err.message : t('bookDemo.form.errors.submitFailed'));
     } finally {
       setIsSubmitting(false);
     }
@@ -183,7 +186,7 @@ export default function BookDemo() {
                   fontWeight: '600',
                 }}
               >
-                RÉSERVER UNE DÉMO
+                {t('bookDemo.hero.badge')}
               </div>
               <h1
                 style={{
@@ -195,7 +198,7 @@ export default function BookDemo() {
                   marginTop: '16px',
                 }}
               >
-                Découvrez Omnischool en Action
+                {t('bookDemo.hero.title')}
               </h1>
               <p
                 style={{
@@ -206,18 +209,12 @@ export default function BookDemo() {
                   marginTop: '20px',
                 }}
               >
-                Réservez une démonstration gratuite de 30 minutes et découvrez comment Omnischool peut
-                transformer la gestion de votre école.
+                {t('bookDemo.hero.subtitle')}
               </p>
 
               {/* Benefits */}
               <div style={{ marginTop: '40px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                {[
-                  'Démo personnalisée selon vos besoins',
-                  'Réponse sous 24h garantie',
-                  'Aucun engagement requis',
-                  'Accompagnement et support inclus',
-                ].map((benefit, index) => (
+                {(t('bookDemo.hero.benefits', { returnObjects: true }) as string[]).map((benefit, index) => (
                   <div key={index} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                     <CheckCircle size={20} style={{ color: '#C5A059', flexShrink: 0 }} />
                     <span style={{ fontSize: '15px', color: '#333333' }}>{benefit}</span>
@@ -229,15 +226,15 @@ export default function BookDemo() {
               <div style={{ marginTop: '48px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <Mail size={18} style={{ color: '#2D472C', flexShrink: 0 }} />
-                  <span style={{ fontSize: '14px', color: '#6B7280' }}>contact@omnischool.tn</span>
+                  <span style={{ fontSize: '14px', color: '#6B7280' }}>{t('bookDemo.contact.email')}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <Phone size={18} style={{ color: '#2D472C', flexShrink: 0 }} />
-                  <span style={{ fontSize: '14px', color: '#6B7280' }}>+216 XX XXX XXX</span>
+                  <span style={{ fontSize: '14px', color: '#6B7280' }}>{t('bookDemo.contact.phone')}</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <MapPin size={18} style={{ color: '#2D472C', flexShrink: 0 }} />
-                  <span style={{ fontSize: '14px', color: '#6B7280' }}>Tunis, Tunisie</span>
+                  <span style={{ fontSize: '14px', color: '#6B7280' }}>{t('bookDemo.contact.location')}</span>
                 </div>
               </div>
             </motion.div>
@@ -267,7 +264,7 @@ export default function BookDemo() {
                         color: '#333333',
                       }}
                     >
-                      Informations sur votre école
+                      {t('bookDemo.form.title')}
                     </h2>
 
                     <form onSubmit={handleSubmit} style={{ marginTop: '24px' }}>
@@ -291,11 +288,8 @@ export default function BookDemo() {
                       {/* Row 1 - First Name & Last Name */}
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
                         <div>
-                          <label
-                            style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
-                            htmlFor="firstName"
-                          >
-                            Prénom
+                          <label style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }} htmlFor="firstName">
+                            {t('bookDemo.form.firstName.label')}
                           </label>
                           <input
                             type="text"
@@ -304,7 +298,7 @@ export default function BookDemo() {
                             required
                             value={formData.firstName}
                             onChange={handleInputChange}
-                            placeholder="Votre prénom"
+                            placeholder={t('bookDemo.form.firstName.placeholder')}
                             style={{
                               width: '100%',
                               height: '40px',
@@ -320,11 +314,8 @@ export default function BookDemo() {
                           />
                         </div>
                         <div>
-                          <label
-                            style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
-                            htmlFor="lastName"
-                          >
-                            Nom
+                          <label style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }} htmlFor="lastName">
+                            {t('bookDemo.form.lastName.label')}
                           </label>
                           <input
                             type="text"
@@ -333,7 +324,7 @@ export default function BookDemo() {
                             required
                             value={formData.lastName}
                             onChange={handleInputChange}
-                            placeholder="Votre nom"
+                            placeholder={t('bookDemo.form.lastName.placeholder')}
                             style={{
                               width: '100%',
                               height: '40px',
@@ -352,11 +343,8 @@ export default function BookDemo() {
 
                       {/* Row 2 - School Name */}
                       <div style={{ marginBottom: '20px' }}>
-                        <label
-                          style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
-                          htmlFor="schoolName"
-                        >
-                          Nom de l'École
+                        <label style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }} htmlFor="schoolName">
+                          {t('bookDemo.form.schoolName.label')}
                         </label>
                         <input
                           type="text"
@@ -365,7 +353,7 @@ export default function BookDemo() {
                           required
                           value={formData.schoolName}
                           onChange={handleInputChange}
-                          placeholder="Ex: École Privée Les Oliviers"
+                          placeholder={t('bookDemo.form.schoolName.placeholder')}
                           style={{
                             width: '100%',
                             height: '40px',
@@ -384,11 +372,8 @@ export default function BookDemo() {
                       {/* Row 3 - Email & Phone */}
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
                         <div>
-                          <label
-                            style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
-                            htmlFor="email"
-                          >
-                            Email
+                          <label style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }} htmlFor="email">
+                            {t('bookDemo.form.email.label')}
                           </label>
                           <input
                             type="email"
@@ -397,7 +382,7 @@ export default function BookDemo() {
                             required
                             value={formData.email}
                             onChange={handleInputChange}
-                            placeholder="votre@email.com"
+                            placeholder={t('bookDemo.form.email.placeholder')}
                             style={{
                               width: '100%',
                               height: '40px',
@@ -413,11 +398,8 @@ export default function BookDemo() {
                           />
                         </div>
                         <div>
-                          <label
-                            style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
-                            htmlFor="phone"
-                          >
-                            Téléphone
+                          <label style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }} htmlFor="phone">
+                            {t('bookDemo.form.phone.label')}
                           </label>
                           <input
                             type="tel"
@@ -426,7 +408,7 @@ export default function BookDemo() {
                             required
                             value={formData.phone}
                             onChange={handleInputChange}
-                            placeholder="+216 XX XXX XXX"
+                            placeholder={t('bookDemo.form.phone.placeholder')}
                             style={{
                               width: '100%',
                               height: '40px',
@@ -446,11 +428,8 @@ export default function BookDemo() {
                       {/* Row 4 - City & Student Count */}
                       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '20px' }}>
                         <div>
-                          <label
-                            style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
-                            htmlFor="city"
-                          >
-                            Ville
+                          <label style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }} htmlFor="city">
+                            {t('bookDemo.form.city.label')}
                           </label>
                           <input
                             type="text"
@@ -459,7 +438,7 @@ export default function BookDemo() {
                             required
                             value={formData.city}
                             onChange={handleInputChange}
-                            placeholder="Ex: Tunis, Sfax..."
+                            placeholder={t('bookDemo.form.city.placeholder')}
                             style={{
                               width: '100%',
                               height: '40px',
@@ -475,11 +454,8 @@ export default function BookDemo() {
                           />
                         </div>
                         <div>
-                          <label
-                            style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
-                            htmlFor="studentCount"
-                          >
-                            Nombre d'Élèves
+                          <label style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }} htmlFor="studentCount">
+                            {t('bookDemo.form.studentCount.label')}
                           </label>
                           <select
                             id="studentCount"
@@ -501,12 +477,12 @@ export default function BookDemo() {
                             onFocus={(e) => (e.target.style.borderColor = '#2D472C')}
                             onBlur={(e) => (e.target.style.borderColor = '#E5E7EB')}
                           >
-                            <option value="">Sélectionner...</option>
-                            <option value="less-100">Moins de 100 élèves</option>
-                            <option value="100-200">100 — 200 élèves</option>
-                            <option value="200-400">200 — 400 élèves</option>
-                            <option value="400-600">400 — 600 élèves</option>
-                            <option value="600+">Plus de 600 élèves</option>
+                            <option value="">{t('bookDemo.form.studentCount.options.placeholder')}</option>
+                            <option value="less-100">{t('bookDemo.form.studentCount.options.less100')}</option>
+                            <option value="100-200">{t('bookDemo.form.studentCount.options.between100and200')}</option>
+                            <option value="200-400">{t('bookDemo.form.studentCount.options.between200and400')}</option>
+                            <option value="400-600">{t('bookDemo.form.studentCount.options.between400and600')}</option>
+                            <option value="600+">{t('bookDemo.form.studentCount.options.more600')}</option>
                           </select>
                         </div>
                       </div>
@@ -514,7 +490,7 @@ export default function BookDemo() {
                       {/* Row 5 - Applications Checkboxes */}
                       <div style={{ marginBottom: '20px' }}>
                         <label style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '12px' }}>
-                          Applications qui vous intéressent
+                          {t('bookDemo.form.apps.label')}
                         </label>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                           <div
@@ -532,7 +508,7 @@ export default function BookDemo() {
                             }}
                           >
                             <LayoutDashboard size={18} style={{ color: '#2D472C' }} />
-                            <span style={{ fontSize: '13px', color: '#333333', flex: 1 }}>Dashboard Assistant</span>
+                            <span style={{ fontSize: '13px', color: '#333333', flex: 1 }}>{t('bookDemo.form.apps.options.assistant')}</span>
                             {formData.apps.assistant && <CheckCircle size={16} style={{ color: '#2D472C' }} />}
                           </div>
 
@@ -551,7 +527,7 @@ export default function BookDemo() {
                             }}
                           >
                             <GraduationCap size={18} style={{ color: '#2D472C' }} />
-                            <span style={{ fontSize: '13px', color: '#333333', flex: 1 }}>App Enseignant</span>
+                            <span style={{ fontSize: '13px', color: '#333333', flex: 1 }}>{t('bookDemo.form.apps.options.teacher')}</span>
                             {formData.apps.teacher && <CheckCircle size={16} style={{ color: '#2D472C' }} />}
                           </div>
 
@@ -570,7 +546,7 @@ export default function BookDemo() {
                             }}
                           >
                             <Users size={18} style={{ color: '#2D472C' }} />
-                            <span style={{ fontSize: '13px', color: '#333333', flex: 1 }}>App Parent</span>
+                            <span style={{ fontSize: '13px', color: '#333333', flex: 1 }}>{t('bookDemo.form.apps.options.parent')}</span>
                             {formData.apps.parent && <CheckCircle size={16} style={{ color: '#2D472C' }} />}
                           </div>
 
@@ -589,7 +565,7 @@ export default function BookDemo() {
                             }}
                           >
                             <BarChart2 size={18} style={{ color: '#2D472C' }} />
-                            <span style={{ fontSize: '13px', color: '#333333', flex: 1 }}>Dashboard Manager</span>
+                            <span style={{ fontSize: '13px', color: '#333333', flex: 1 }}>{t('bookDemo.form.apps.options.manager')}</span>
                             {formData.apps.manager && <CheckCircle size={16} style={{ color: '#2D472C' }} />}
                           </div>
                         </div>
@@ -597,18 +573,15 @@ export default function BookDemo() {
 
                       {/* Row 6 - Message */}
                       <div style={{ marginBottom: '24px' }}>
-                        <label
-                          style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }}
-                          htmlFor="message"
-                        >
-                          Message (optionnel)
+                        <label style={{ display: 'block', fontSize: '13px', color: '#6B7280', marginBottom: '8px' }} htmlFor="message">
+                          {t('bookDemo.form.message.label')}
                         </label>
                         <textarea
                           id="message"
                           name="message"
                           value={formData.message}
                           onChange={handleInputChange}
-                          placeholder="Dites-nous en plus sur votre école et vos besoins..."
+                          placeholder={t('bookDemo.form.message.placeholder')}
                           rows={4}
                           style={{
                             width: '100%',
@@ -651,19 +624,12 @@ export default function BookDemo() {
                           if (!isSubmitting) e.currentTarget.style.opacity = '1';
                         }}
                       >
-                        {isSubmitting ? 'Envoi en cours…' : 'Envoyer ma Demande de Démo →'}
+                        {isSubmitting ? t('bookDemo.form.submit.submitting') : t('bookDemo.form.submit.label')}
                       </button>
 
                       {/* Note */}
-                      <div
-                        style={{
-                          fontSize: '12px',
-                          color: '#9CA3AF',
-                          textAlign: 'center',
-                          marginTop: '12px',
-                        }}
-                      >
-                        ✓ Réponse sous 24h ✓ Démo gratuite ✓ Sans engagement
+                      <div style={{ fontSize: '12px', color: '#9CA3AF', textAlign: 'center', marginTop: '12px' }}>
+                        {t('bookDemo.form.trustLine')}
                       </div>
                     </form>
                   </>
@@ -680,11 +646,9 @@ export default function BookDemo() {
                         marginBottom: '12px',
                       }}
                     >
-                      Demande Envoyée!
+                      {t('bookDemo.success.title')}
                     </h2>
-                    <p style={{ fontSize: '15px', color: '#6B7280', marginBottom: '32px' }}>
-                      Nous vous contacterons dans les 24 heures pour confirmer votre démonstration.
-                    </p>
+                    <p style={{ fontSize: '15px', color: '#6B7280', marginBottom: '32px' }}>{t('bookDemo.success.subtitle')}</p>
                     <Link to="/">
                       <button
                         style={{
@@ -707,7 +671,7 @@ export default function BookDemo() {
                           e.currentTarget.style.color = '#2D472C';
                         }}
                       >
-                        Retour à l'accueil
+                        {t('bookDemo.success.backHome')}
                       </button>
                     </Link>
                   </div>

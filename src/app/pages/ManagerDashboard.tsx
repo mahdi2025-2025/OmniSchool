@@ -4,8 +4,10 @@ import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { BarChart3, TrendingUp, Users, DollarSign, Calendar, FileText } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 export default function ManagerDashboard() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -17,15 +19,15 @@ export default function ManagerDashboard() {
   }, []);
 
   const features = [
-    { icon: BarChart3, title: 'Analyses & Statistiques', description: 'Tableaux de bord avec KPIs en temps réel' },
-    { icon: TrendingUp, title: 'Performance Scolaire', description: 'Suivez les résultats académiques par classe' },
-    { icon: Users, title: 'Gestion des Rôles', description: 'Créez et gérez les comptes assistants' },
-    { icon: DollarSign, title: 'Rapports Financiers', description: 'Vue complète des revenus, dépenses et balance' },
-    { icon: Calendar, title: 'Planification', description: 'Gérez les événements et les horaires' },
-    { icon: FileText, title: 'Documents', description: 'Accédez et gérez les documents importants' },
+    { icon: BarChart3, title: t('managerDashboard.features.analytics.title'), description: t('managerDashboard.features.analytics.description') },
+    { icon: TrendingUp, title: t('managerDashboard.features.performance.title'), description: t('managerDashboard.features.performance.description') },
+    { icon: Users, title: t('managerDashboard.features.roles.title'), description: t('managerDashboard.features.roles.description') },
+    { icon: DollarSign, title: t('managerDashboard.features.financialReports.title'), description: t('managerDashboard.features.financialReports.description') },
+    { icon: Calendar, title: t('managerDashboard.features.planning.title'), description: t('managerDashboard.features.planning.description') },
+    { icon: FileText, title: t('managerDashboard.features.documents.title'), description: t('managerDashboard.features.documents.description') },
   ];
 
-  const screens = ['Statistiques', 'Finance', 'Rapports'];
+  const screens = [t('managerDashboard.screens.stats'), t('managerDashboard.screens.finance'), t('managerDashboard.screens.reports')];
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: '#F9F9F7', fontFamily: 'Inter, sans-serif' }}>
@@ -54,6 +56,19 @@ export default function ManagerDashboard() {
               >
                 DASHBOARD MANAGER
               </div>
+              <div
+                style={{ 
+                  fontFamily: 'Inter, sans-serif',
+                  fontSize: '11px',
+                  letterSpacing: '0.15em',
+                  color: '#C5A059',
+                  textTransform: 'uppercase',
+                  fontWeight: '600',
+                  marginBottom: '8px'
+                }}
+              >
+                {t('managerDashboard.hero.badge')}
+              </div>
               <h1
                 style={{ 
                   fontFamily: 'Montserrat, sans-serif', 
@@ -64,10 +79,10 @@ export default function ManagerDashboard() {
                   marginBottom: '20px'
                 }}
               >
-                Pilotez Votre École avec des Données Précises
+                {t('managerDashboard.hero.title')}
               </h1>
               <p style={{ fontSize: '16px', color: '#6B7280', lineHeight: '1.6', marginBottom: '32px' }}>
-                Analyses avancées, approbations financières et supervision complète de votre établissement.
+                {t('managerDashboard.hero.subtitle')}
               </p>
               <button
                 className="transition-all duration-200 hover:opacity-90"
@@ -81,7 +96,7 @@ export default function ManagerDashboard() {
                   fontWeight: '500'
                 }}
               >
-                Voir les Fonctionnalités
+                {t('managerDashboard.hero.ctaFeatures')}
               </button>
             </motion.div>
 
@@ -189,7 +204,7 @@ export default function ManagerDashboard() {
                 marginBottom: '12px'
               }}
             >
-              FONCTIONNALITÉS
+              {t('managerDashboard.featuresSection.badge')}
             </div>
             <h2
               style={{ 
@@ -199,7 +214,7 @@ export default function ManagerDashboard() {
                 color: '#333333'
               }}
             >
-              Tout ce dont le Manager a Besoin
+              {t('managerDashboard.featuresSection.title')}
             </h2>
           </div>
 
@@ -355,10 +370,10 @@ export default function ManagerDashboard() {
               marginBottom: '16px'
             }}
           >
-            Prêt à Simplifier votre Travail?
+            {t('managerDashboard.cta.title')}
           </h2>
           <p style={{ fontSize: '16px', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '32px' }}>
-            Découvrez comment Omnischool peut transformer la gestion de votre école
+            {t('managerDashboard.cta.subtitle')}
           </p>
           <Link to="/book-demo">
             <button
@@ -373,7 +388,7 @@ export default function ManagerDashboard() {
                 fontWeight: '600'
               }}
             >
-              Réserver une Démo
+              {t('managerDashboard.cta.button')}
             </button>
           </Link>
         </div>

@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { Navbar } from '../components/Navbar';
 import { Footer } from '../components/Footer';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import pa11 from '../../assets/pa15.png';
 import pa1 from '../../assets/pa1.jpg';
 import pa2 from '../../assets/pa2.jpg';
@@ -17,6 +18,7 @@ import pa10 from '../../assets/pa10.jpg';
 import './appHeroMockup.css';
 
 export default function ParentApp() {
+  const { t } = useTranslation();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -34,43 +36,25 @@ export default function ParentApp() {
 
 
   const screens = [
-    { title: 'Calendrier intelligent', image: pa1 },
-    { title: 'Profil et paramètres', image: pa2 },
-    { title: 'Réservation de réunion et de rendez-vous', image: pa3 },
-    { title: 'Signaler une absence', image: pa4 },
-    { title: 'Galerie', image: pa5 },
-    { title: 'Notifications', image: pa6 },
-    { title: 'Finances', image: pa7 },
-    { title: 'Contacter l’enseignant', image: pa8 },
-    { title: 'Menu', image: pa9 },
-    { title: 'Les matières', image: pa10 },
+    { title: t('parentApp.screens.smartCalendar'), image: pa1 },
+    { title: t('parentApp.screens.profileSettings'), image: pa2 },
+    { title: t('parentApp.screens.meetings'), image: pa3 },
+    { title: t('parentApp.screens.reportAbsence'), image: pa4 },
+    { title: t('parentApp.screens.gallery'), image: pa5 },
+    { title: t('parentApp.screens.notifications'), image: pa6 },
+    { title: t('parentApp.screens.finance'), image: pa7 },
+    { title: t('parentApp.screens.contactTeacher'), image: pa8 },
+    { title: t('parentApp.screens.menu'), image: pa9 },
+    { title: t('parentApp.screens.subjects'), image: pa10 },
   ];
 
   const parentFeatures = [
-    {
-      title: 'Présences Intelligentes',
-      description: 'Marquéz les présences par classe en quéiques secondes',
-    },
-    {
-      title: 'Gestion du Syllabus',
-      description: 'Planifiez et suives voire programme par matérré',
-    },
-    {
-      title: 'Saisie des Notes',
-      description: 'Entrez les notes CC1, CC2 et examens finaux',
-    },
-    {
-      title: 'Publication des Devoirs',
-      description: 'Partagez les devoirs avec les elères et parents',
-    },
-    {
-      title: 'Emploi du Temps',
-      description: 'Consultez voire planning hebdomadaire en temps réel',
-    },
-    {
-      title: 'Demandes & Requétes',
-      description: 'Soumettez des demandes à l’administration',
-    },
+    { title: t('parentApp.features.smartAttendance.title'), description: t('parentApp.features.smartAttendance.description') },
+    { title: t('parentApp.features.syllabus.title'), description: t('parentApp.features.syllabus.description') },
+    { title: t('parentApp.features.grades.title'), description: t('parentApp.features.grades.description') },
+    { title: t('parentApp.features.homework.title'), description: t('parentApp.features.homework.description') },
+    { title: t('parentApp.features.timetable.title'), description: t('parentApp.features.timetable.description') },
+    { title: t('parentApp.features.requests.title'), description: t('parentApp.features.requests.description') },
   ];
 
   return (
@@ -98,7 +82,7 @@ export default function ParentApp() {
                   marginBottom: '16px'
                 }}
               >
-                APPLICATION PARENT
+                {t('parentApp.hero.badge')}
               </div>
               <h1
                 style={{ 
@@ -110,10 +94,10 @@ export default function ParentApp() {
                   marginBottom: '20px'
                 }}
               >
-                Restez Connecté à la Scolarité de Votre Enfant
+                {t('parentApp.hero.title')}
               </h1>
               <p style={{ fontSize: '16px', color: '#6B7280', lineHeight: '1.6', marginBottom: '32px' }}>
-                Le rôle du parent dans OmniSchool Parent est de suivre et superviser tout ce qui concerne la scolarité de son enfant depuis une seule application. Il peut visualiser les informations essentielles comme les devoirs, l’emploi du temps, les notes, les absences, les événements scolaires et les factures. Grâce à une navigation simple, il accède rapidement aux différents modules et peut également interagir avec l’école en envoyant des messages, en réservant des rendez-vous ou en effectuant des paiements. L’application lui envoie des notifications en temps réel pour rester informé des nouveautés importantes. Ainsi, le parent dispose d’une vue claire et centralisée pour accompagner efficacement la vie scolaire de son enfant.
+                {t('parentApp.hero.description')}
               </p>
               <button
                 className="transition-all duration-200 hover:opacity-90"
@@ -129,7 +113,7 @@ export default function ParentApp() {
                 onClick={scrollToFeatures}
                 type="button"
               >
-                Voir les Fonctionnalités
+                {t('parentApp.hero.ctaFeatures')}
               </button>
             </motion.div>
 
@@ -148,13 +132,13 @@ export default function ParentApp() {
                       <span className="omni-hero-mockup__dot omni-hero-mockup__dot--yellow" />
                       <span className="omni-hero-mockup__dot omni-hero-mockup__dot--green" />
                     </div>
-                    <div className="omni-hero-mockup__title">OmniSchool • Parents</div>
+                    <div className="omni-hero-mockup__title">{t('parentApp.hero.mockupTitle')}</div>
                   </div>
 
                   <div className="omni-hero-mockup__media">
                     <img
                       src={pa11}
-                      alt="Application Parent OmniSchool"
+                      alt={t('parentApp.hero.imageAlt')}
                       className="omni-hero-mockup__img"
                     />
                   </div>
@@ -180,7 +164,7 @@ export default function ParentApp() {
                 marginBottom: '12px'
               }}
             >
-              FONCTIONNALITÉS
+              {t('parentApp.featuresSection.badge')}
             </div>
             <h2
               style={{ 
@@ -190,7 +174,7 @@ export default function ParentApp() {
                 color: '#333333'
               }}
             >
-              Tout ce dont le Parent a Besoin
+              {t('parentApp.featuresSection.title')}
             </h2>
           </div>
 
@@ -348,10 +332,10 @@ export default function ParentApp() {
               marginBottom: '16px'
             }}
           >
-            Prêt à Simplifier votre Travail?
+            {t('parentApp.cta.title')}
           </h2>
           <p style={{ fontSize: '16px', color: 'rgba(255, 255, 255, 0.8)', marginBottom: '32px' }}>
-            Découvrez comment Omnischool peut vous aider à suivre la scolarité de votre enfant
+            {t('parentApp.cta.subtitle')}
           </p>
           <Link to="/book-demo">
             <button
@@ -366,7 +350,7 @@ export default function ParentApp() {
                 fontWeight: '600'
               }}
             >
-              Réserver une Démo
+              {t('parentApp.cta.button')}
             </button>
           </Link>
         </div>

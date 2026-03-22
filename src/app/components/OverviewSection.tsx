@@ -2,20 +2,13 @@ import { motion } from 'motion/react';
 import { CheckCircle2 } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import cap4 from '../../assets/cap4.png';
-
-const features = [
-  'Gestion des élèves, enseignants et parents',
-  'Emploi du temps intelligent avec assistant IA',
-  'Finance complète — frais scolaires, salaires, fournisseurs',
-  'Matières, examens, notes et bulletins scolaires',
-  'Services campus — transport, cantine, reprographie, stock',
-  'Communication école ↔ enseignants ↔ parents',
-  'Application mobile enseignant — présences, devoirs, notes',
-  'Application mobile parent — suivi complet de la scolarité',
-  'Dashboard manager — analyses, approbations, rapports',
-];
+import { useTranslation } from 'react-i18next';
 
 export function OverviewSection() {
+  const { t } = useTranslation();
+
+  const features = t('home.overviewSection.features', { returnObjects: true }) as string[];
+
   return (
     <section className="py-20 px-6" style={{ backgroundColor: 'white' }}>
       <div className="max-w-[1320px] mx-auto">
@@ -46,7 +39,7 @@ export function OverviewSection() {
               <div className="w-full h-[320px] sm:h-[420px] lg:h-[520px]">
                 <ImageWithFallback
                   src={cap4}
-                  alt="École Tunisienne"
+                  alt={t('home.overviewSection.imageAlt')}
                   className="w-full h-full object-cover"
                   style={{
                     objectPosition: 'center',
@@ -95,14 +88,14 @@ export function OverviewSection() {
                 letterSpacing: '-0.01em'
               }}
             >
-              La Solution Complète pour Gérer Votre École Privée
+              {t('home.overviewSection.title')}
             </h2>
 
             {/* Feature Checklist */}
             <div className="space-y-3 pt-2">
               {features.map((feature, index) => (
                 <motion.div
-                  key={feature}
+                  key={`${feature}-${index}`}
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
