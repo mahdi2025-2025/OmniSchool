@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "solutions": "Solutions",
+    "applications": "Applications",
+    "contact": "Contact",
+    "about": "À propos",
+    "bookDemo": "Réserver une démo",
+    "apps": {
+      "teacher": "App Enseignant",
+      "parent": "App Parent",
+      "assistant": "Dashboard Assistant",
+      "manager": "Dashboard Manager"
+    }
+  },
+  "language": {
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية"
+  },
+  "common": {
+    "brand": "OmniSchool",
+    "language": "Langue"
+  },
+  "home": {
+    "hero": {
+      "title": "La solution complète pour gérer votre école",
+      "subtitle": "OmniSchool centralise toute la gestion scolaire en une seule plateforme — Administration, Enseignants, Parents et Élèves.",
+      "ctaBookDemo": "Réserver une démo",
+      "ctaDiscover": "Découvrir la solution",
+      "mockups": {
+        "admin": {
+          "alt": "Dashboard Admin",
+          "badge": "Dashboard Admin",
+          "title": "Pilotage & Statistiques",
+          "subtitle": "Suivi des demandes, conversion, tendances"
+        },
+        "teacher": {
+          "alt": "App Enseignant",
+          "badge": "App Enseignant",
+          "title": "Cours & Communication",
+          "subtitle": "Notes, devoirs, absences, messages"
+        },
+        "parent": {
+          "alt": "App Parent",
+          "badge": "App Parent",
+          "title": "Suivi des enfants",
+          "subtitle": "Présences, notes, devoirs, notifications"
+        },
+        "mobile": {
+          "alt": "Aperçu"
+        }
+      }
+    },
+    "bookDemo": {
+      "title": "Prêt à transformer votre école ?",
+      "subtitle": "Réservez une démo gratuite et découvrez comment OmniSchool peut simplifier votre gestion scolaire.",
+      "cta": "Réserver ma démo gratuite",
+      "trust": {
+        "fastResponse": "Réponse sous 24h",
+        "freeDemo": "Démo gratuite",
+        "noCommitment": "Sans engagement"
+      }
+    },
+    "products": {
+      "title": "Nos applications",
+      "admin": {
+        "title": "Dashboard Administrateur",
+        "description": "Gérez toute l'école depuis un tableau de bord centralisé. Élèves, enseignants, finances et emploi du temps.",
+        "cta": "Découvrir le dashboard",
+        "imageAlt": "Dashboard Administrateur"
+      },
+      "teacher": {
+        "title": "Application Enseignant",
+        "description": "Présences intelligentes, notes, devoirs et syllabus — tout ce dont l'enseignant a besoin sur mobile.",
+        "cta": "Découvrir l'app enseignant",
+        "imageAlt": "Application Enseignant"
+      },
+      "parent": {
+        "title": "Application Parent",
+        "description": "Suivez la scolarité de votre enfant en temps réel. Notes, absences et actualités scolaires.",
+        "cta": "Découvrir l'app parent",
+        "imageAlt": "Application Parent"
+      }
+    }
+  }
+}

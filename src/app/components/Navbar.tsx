@@ -1,7 +1,9 @@
 import { motion } from 'motion/react';
-import { Globe, GraduationCap, Users, LayoutDashboard, BarChart2 } from 'lucide-react';
+import { GraduationCap, Users, LayoutDashboard, BarChart2 } from 'lucide-react';
 import { Link } from 'react-router';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LanguageSwitcher } from './LanguageSwitcher';
 import logoImage from '../../assets/omnischool.png';
 
 interface NavbarProps {
@@ -10,20 +12,13 @@ interface NavbarProps {
 
 export function Navbar({ scrolled }: NavbarProps) {
   const [applicationsOpen, setApplicationsOpen] = useState(false);
-  const [languageOpen, setLanguageOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('FR');
+  const { t } = useTranslation();
 
   const applicationItems = [
-    { icon: GraduationCap, label: 'App Enseignant', path: '/app/teacher' },
-    { icon: Users, label: 'App Parent', path: '/app/parent' },
-    { icon: LayoutDashboard, label: 'Dashboard Assistant', path: '/app/assistant' },
-    { icon: BarChart2, label: 'Dashboard Manager', path: '/app/manager' },
-  ];
-
-  const languageItems = [
-    { code: 'FR', label: 'Français' },
-    { code: 'AR', label: 'العربية' },
-    { code: 'EN', label: 'English' },
+    { icon: GraduationCap, label: t('nav.apps.teacher'), path: '/app/teacher' },
+    { icon: Users, label: t('nav.apps.parent'), path: '/app/parent' },
+    { icon: LayoutDashboard, label: t('nav.apps.assistant'), path: '/app/assistant' },
+    { icon: BarChart2, label: t('nav.apps.manager'), path: '/app/manager' },
   ];
 
   return (
@@ -36,10 +31,9 @@ export function Navbar({ scrolled }: NavbarProps) {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-
         {/* Logo */}
         <Link to="/" className="flex items-center">
-          <img src={logoImage} alt="Omnischool Logo" style={{ height: '50px', width: 'auto' }} />
+          <img src={logoImage} alt={t('common.brand')} style={{ height: '50px', width: 'auto' }} />
         </Link>
 
         {/* Center Navigation */}
@@ -51,7 +45,7 @@ export function Navbar({ scrolled }: NavbarProps) {
             onMouseEnter={(e) => (e.currentTarget.style.color = '#2D472C')}
             onMouseLeave={(e) => (e.currentTarget.style.color = '#6B7280')}
           >
-            Solutions
+            {t('nav.solutions')}
           </Link>
 
           {/* Applications Dropdown */}
@@ -64,7 +58,7 @@ export function Navbar({ scrolled }: NavbarProps) {
               className="text-sm font-normal transition-colors duration-200"
               style={{ color: applicationsOpen ? '#2D472C' : '#6B7280' }}
             >
-              Applications
+              {t('nav.applications')}
             </button>
 
             {applicationsOpen && (
@@ -123,7 +117,7 @@ export function Navbar({ scrolled }: NavbarProps) {
             className="text-sm font-normal transition-colors duration-200"
             style={{ color: '#6B7280' }}
           >
-            Contact
+            {t('nav.contact')}
           </Link>
 
           <Link
@@ -131,59 +125,13 @@ export function Navbar({ scrolled }: NavbarProps) {
             className="text-sm font-normal transition-colors duration-200"
             style={{ color: '#6B7280' }}
           >
-            About
+            {t('nav.about')}
           </Link>
         </div>
 
         {/* Right Side */}
         <div className="flex items-center gap-4">
-
-          {/* Language */}
-          <div
-            className="relative hidden sm:flex"
-            onMouseEnter={() => setLanguageOpen(true)}
-            onMouseLeave={() => setLanguageOpen(false)}
-          >
-            <button className="p-2 rounded-md">
-              <Globe size={18} />
-            </button>
-
-            {languageOpen && (
-              <motion.div
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.2 }}
-                className="absolute top-full right-0 pt-2"
-              >
-                <div
-                  style={{
-                    width: '150px',
-                    backgroundColor: 'white',
-                    borderRadius: '8px',
-                    border: '1px solid #E5E7EB',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {languageItems.map((lang) => (
-                    <button
-                      key={lang.code}
-                      onClick={() => setSelectedLanguage(lang.code)}
-                      className="w-full text-left"
-                      style={{
-                        padding: '12px 16px',
-                        fontSize: '14px',
-                        background: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer',
-                      }}
-                    >
-                      {lang.label}
-                    </button>
-                  ))}
-                </div>
-              </motion.div>
-            )}
-          </div>
+          <LanguageSwitcher />
 
           {/* Button */}
           <Link to="/book-demo">
@@ -195,7 +143,7 @@ export function Navbar({ scrolled }: NavbarProps) {
                 borderRadius: '4px',
               }}
             >
-              Réserver une Démo
+              {t('nav.bookDemo')}
             </button>
           </Link>
         </div>

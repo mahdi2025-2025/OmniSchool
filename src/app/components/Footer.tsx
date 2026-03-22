@@ -1,6 +1,23 @@
 import { Facebook, Twitter, Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export function Footer() {
+  const { t } = useTranslation();
+
+  const solutionLinkKeys = [
+    'footer.solutions.admin',
+    'footer.solutions.teacher',
+    'footer.solutions.parent',
+    'footer.solutions.manager',
+  ];
+
+  const featureLinkKeys = [
+    'footer.features.students',
+    'footer.features.finance',
+    'footer.features.timetable',
+    'footer.features.communication',
+  ];
+
   return (
     <footer style={{ backgroundColor: '#2D472C' }} className="pt-20 pb-8 px-6">
       <div className="max-w-7xl mx-auto">
@@ -13,25 +30,25 @@ export function Footer() {
           <div>
             <div className="flex items-center mb-4">
               <span style={{ fontFamily: 'Montserrat, sans-serif', fontSize: '20px', fontWeight: '700', color: 'white' }}>
-                Omnischool
+                {t('common.brand')}
               </span>
             </div>
             <p style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.6)', lineHeight: '1.6' }} className="mb-6">
-              La Solution Scolaire de Demain
+              {t('footer.tagline')}
             </p>
             <div className="flex gap-4">
               <a
                 href="https://www.facebook.com/profile.php?id=61576014832405"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Facebook"
+                aria-label={t('footer.social.facebook')}
                 className="transition-opacity duration-200 hover:opacity-70"
               >
                 <Facebook size={20} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
               </a>
               <a
                 href="#"
-                aria-label="Twitter"
+                aria-label={t('footer.social.twitter')}
                 className="transition-opacity duration-200 hover:opacity-70"
               >
                 <Twitter size={20} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
@@ -40,14 +57,14 @@ export function Footer() {
                 href="https://www.linkedin.com/company/omnilinks-tn/posts/?feedView=all"
                 target="_blank"
                 rel="noreferrer"
-                aria-label="LinkedIn"
+                aria-label={t('footer.social.linkedin')}
                 className="transition-opacity duration-200 hover:opacity-70"
               >
                 <Linkedin size={20} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
               </a>
               <a
                 href="#"
-                aria-label="Instagram"
+                aria-label={t('footer.social.instagram')}
                 className="transition-opacity duration-200 hover:opacity-70"
               >
                 <Instagram size={20} style={{ color: 'rgba(255, 255, 255, 0.6)' }} />
@@ -59,13 +76,13 @@ export function Footer() {
           <div className="grid grid-cols-2 gap-8">
             <div>
               <h4 style={{ fontSize: '14px', fontWeight: '600', color: 'white', marginBottom: '16px' }}>
-                Solutions
+                {t('footer.headings.solutions')}
               </h4>
               <ul className="space-y-3">
-                {['Dashboard Admin', 'App Enseignant', 'App Parent', 'Dashboard Manager'].map((item) => (
-                  <li key={item}>
+                {solutionLinkKeys.map((key) => (
+                  <li key={key}>
                     <a href="#" className="text-sm transition-opacity duration-200 hover:opacity-70" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                      {item}
+                      {t(key)}
                     </a>
                   </li>
                 ))}
@@ -74,13 +91,13 @@ export function Footer() {
 
             <div>
               <h4 style={{ fontSize: '14px', fontWeight: '600', color: 'white', marginBottom: '16px' }}>
-                Fonctionnalités
+                {t('footer.headings.features')}
               </h4>
               <ul className="space-y-3">
-                {['Gestion Élèves', 'Finance', 'Emploi du Temps', 'Communication'].map((item) => (
-                  <li key={item}>
+                {featureLinkKeys.map((key) => (
+                  <li key={key}>
                     <a href="#" className="text-sm transition-opacity duration-200 hover:opacity-70" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                      {item}
+                      {t(key)}
                     </a>
                   </li>
                 ))}
@@ -91,25 +108,26 @@ export function Footer() {
           {/* Contact */}
           <div>
             <h4 style={{ fontSize: '14px', fontWeight: '600', color: 'white', marginBottom: '16px' }}>
-              Contact
+              {t('footer.headings.contact')}
             </h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Mail size={16} style={{ color: '#C5A059', marginTop: '2px', flexShrink: 0 }} />
                 <a href="mailto:contact@omnischool.tn" className="text-sm transition-opacity duration-200 hover:opacity-70" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                  contact@omnischool.tn
+                  {t('footer.contact.email')}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={16} style={{ color: '#C5A059', marginTop: '2px', flexShrink: 0 }} />
                 <a href="tel:+21612345678" className="text-sm transition-opacity duration-200 hover:opacity-70" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                  +216 12 345 678
+                  {t('footer.contact.phone')}
                 </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={16} style={{ color: '#C5A059', marginTop: '2px', flexShrink: 0 }} />
                 <span className="text-sm" style={{ color: 'rgba(255, 255, 255, 0.6)' }}>
-                  Avenue Habib Bourguiba<br />Tunis, Tunisie
+                  {t('footer.contact.addressLine1')}<br />
+                  {t('footer.contact.addressLine2')}
                 </span>
               </li>
             </ul>
@@ -123,14 +141,14 @@ export function Footer() {
               className="text-center sm:text-left"
               style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.4)' }}
             >
-              © 2026 Omnischool. Tous droits réservés.
+              {t('footer.copyright')}
             </p>
 
             <p
               className="text-center"
               style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.4)' }}
             >
-              PoweredBy OmniLinks
+              {t('footer.poweredBy')}
             </p>
 
             <div
@@ -138,11 +156,11 @@ export function Footer() {
               style={{ fontSize: '14px', color: 'rgba(255, 255, 255, 0.4)' }}
             >
               <a href="#" className="transition-opacity duration-200 hover:opacity-70">
-                Confidentialité
+                {t('footer.legal.privacy')}
               </a>
               <span style={{ color: 'rgba(255, 255, 255, 0.25)' }}>|</span>
               <a href="#" className="transition-opacity duration-200 hover:opacity-70">
-                Conditions d'utilisation
+                {t('footer.legal.terms')}
               </a>
             </div>
           </div>

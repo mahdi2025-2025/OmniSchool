@@ -1,8 +1,11 @@
 import { motion } from 'motion/react';
 import { CheckCircle } from 'lucide-react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 
 export function BookDemoSection() {
+  const { t } = useTranslation();
+
   return (
     <section className="py-24 px-6" style={{ backgroundColor: '#F9F9F7' }}>
       <div className="max-w-3xl mx-auto text-center">
@@ -22,7 +25,7 @@ export function BookDemoSection() {
           }}
           className="mb-4"
         >
-          Prêt à Transformer Votre École?
+          {t('home.bookDemo.title')}
         </motion.h2>
 
         {/* Subtitle */}
@@ -34,7 +37,7 @@ export function BookDemoSection() {
           style={{ fontSize: '16px', color: '#6B7280', lineHeight: '1.6', textAlign: 'center' }}
           className="mb-12"
         >
-          Réservez une démo gratuite et découvrez comment Omnischool peut simplifier votre gestion scolaire
+          {t('home.bookDemo.subtitle')}
         </motion.p>
 
         {/* CTA Button */}
@@ -55,7 +58,7 @@ export function BookDemoSection() {
                 fontWeight: '600'
               }}
             >
-              Réserver ma Démo Gratuite
+              {t('home.bookDemo.cta')}
             </button>
           </Link>
 
@@ -63,15 +66,15 @@ export function BookDemoSection() {
           <div className="flex flex-wrap justify-center gap-6 mt-8 text-sm" style={{ color: '#6B7280' }}>
             <div className="flex items-center gap-2">
               <CheckCircle size={16} style={{ color: '#C5A059' }} />
-              <span>Réponse sous 24h</span>
+              <span>{t('home.bookDemo.trust.fastResponse')}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle size={16} style={{ color: '#C5A059' }} />
-              <span>Démo gratuite</span>
+              <span>{t('home.bookDemo.trust.freeDemo')}</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle size={16} style={{ color: '#C5A059' }} />
-              <span>Sans engagement</span>
+              <span>{t('home.bookDemo.trust.noCommitment')}</span>
             </div>
           </div>
         </motion.div>

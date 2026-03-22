@@ -1,11 +1,14 @@
 import { motion } from 'motion/react';
 import { Link } from 'react-router';
+import { useTranslation } from 'react-i18next';
 import heroBackground from '../../assets/baground.jpg';
 import cap1 from '../../assets/cap1.png';
 import cap2 from '../../assets/cap2.png';
 import cap3 from '../../assets/cap3.png';
 
 export function HeroSection() {
+  const { t } = useTranslation();
+
   return (
     <section
       style={{ backgroundColor: '#F9F9F7' }}
@@ -71,12 +74,12 @@ export function HeroSection() {
                 letterSpacing: '-0.02em'
               }}
             >
-              La Solution Complète pour Gérer Votre École
+              {t('home.hero.title')}
             </h1>
 
             {/* Subtitle */}
             <p style={{ fontSize: '16px', color: '#6B7280', lineHeight: '1.6' }} className="max-w-lg">
-              Omnischool centralise toute la gestion scolaire en une seule plateforme — Administration, Enseignants, Parents et Élèves.
+              {t('home.hero.subtitle')}
             </p>
 
             {/* CTA Buttons */}
@@ -92,7 +95,7 @@ export function HeroSection() {
                     fontSize: '15px'
                   }}
                 >
-                  Réserver une Démo
+                  {t('home.hero.ctaBookDemo')}
                 </button>
               </Link>
               <button
@@ -106,7 +109,7 @@ export function HeroSection() {
                   backgroundColor: 'transparent'
                 }}
               >
-                Découvrir la Solution
+                {t('home.hero.ctaDiscover')}
               </button>
             </div>
           </motion.div>
@@ -149,7 +152,7 @@ export function HeroSection() {
               <div className="relative">
                 <img
                   src={cap1}
-                  alt="Dashboard Admin"
+                  alt={t('home.hero.mockups.admin.alt')}
                   className="w-full h-[300px] object-cover"
                   style={{ display: 'block' }}
                 />
@@ -170,15 +173,15 @@ export function HeroSection() {
                     boxShadow: '0 10px 24px rgba(45, 71, 44, 0.25)',
                   }}
                 >
-                  Dashboard Admin
+                  {t('home.hero.mockups.admin.badge')}
                 </div>
               </div>
               <div className="px-5 py-4">
                 <div className="text-sm font-semibold" style={{ color: '#111827' }}>
-                  Pilotage & Statistiques
+                  {t('home.hero.mockups.admin.title')}
                 </div>
                 <div className="text-xs mt-1" style={{ color: '#6B7280' }}>
-                  Suivi des demandes, conversion, tendances
+                  {t('home.hero.mockups.admin.subtitle')}
                 </div>
               </div>
             </motion.div>
@@ -202,7 +205,7 @@ export function HeroSection() {
               <div className="relative">
                 <img
                   src={cap2}
-                  alt="App Enseignant"
+                  alt={t('home.hero.mockups.teacher.alt')}
                   className="w-full h-[300px] object-cover"
                   style={{ display: 'block' }}
                 />
@@ -224,15 +227,15 @@ export function HeroSection() {
                     boxShadow: '0 14px 30px rgba(197, 160, 89, 0.38)',
                   }}
                 >
-                  App Enseignant
+                  {t('home.hero.mockups.teacher.badge')}
                 </div>
               </div>
               <div className="px-5 py-4">
                 <div className="text-sm font-semibold" style={{ color: '#111827' }}>
-                  Cours & Communication
+                  {t('home.hero.mockups.teacher.title')}
                 </div>
                 <div className="text-xs mt-1" style={{ color: '#6B7280' }}>
-                  Notes, devoirs, absences, messages
+                  {t('home.hero.mockups.teacher.subtitle')}
                 </div>
               </div>
             </motion.div>
@@ -257,7 +260,7 @@ export function HeroSection() {
               <div className="relative">
                 <img
                   src={cap3}
-                  alt="App Parent"
+                  alt={t('home.hero.mockups.parent.alt')}
                   className="w-full h-[300px] object-cover"
                   style={{ display: 'block' }}
                 />
@@ -278,15 +281,15 @@ export function HeroSection() {
                     backdropFilter: 'blur(8px)',
                   }}
                 >
-                  App Parent
+                  {t('home.hero.mockups.parent.badge')}
                 </div>
               </div>
               <div className="px-5 py-4">
                 <div className="text-sm font-semibold" style={{ color: '#111827' }}>
-                  Suivi & Notifications
+                  {t('home.hero.mockups.parent.title')}
                 </div>
                 <div className="text-xs mt-1" style={{ color: '#6B7280' }}>
-                  Notes, absences, messages, paiements
+                  {t('home.hero.mockups.parent.subtitle')}
                 </div>
               </div>
             </motion.div>
@@ -301,7 +304,7 @@ export function HeroSection() {
                   boxShadow: '0 26px 80px rgba(0, 0, 0, 0.18)',
                 }}
               >
-                <img src={cap1} alt="Aperçu" className="w-full h-[220px] object-cover" />
+                <img src={cap1} alt={t('home.hero.mockups.mobile.alt')} className="w-full h-[220px] object-cover" />
               </div>
             </div>
           </motion.div>

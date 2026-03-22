@@ -1,0 +1,86 @@
+{
+  "nav": {
+    "solutions": "Solutions",
+    "applications": "Applications",
+    "contact": "Contact",
+    "about": "About",
+    "bookDemo": "Book a demo",
+    "apps": {
+      "teacher": "Teacher App",
+      "parent": "Parent App",
+      "assistant": "Assistant Dashboard",
+      "manager": "Manager Dashboard"
+    }
+  },
+  "language": {
+    "en": "English",
+    "fr": "Français",
+    "ar": "العربية"
+  },
+  "common": {
+    "brand": "OmniSchool",
+    "language": "Language"
+  },
+  "home": {
+    "hero": {
+      "title": "The complete solution to manage your school",
+      "subtitle": "OmniSchool centralizes all school management in a single platform — Administration, Teachers, Parents and Students.",
+      "ctaBookDemo": "Book a demo",
+      "ctaDiscover": "Discover the solution",
+      "mockups": {
+        "admin": {
+          "alt": "Admin dashboard",
+          "badge": "Admin dashboard",
+          "title": "Insights & Analytics",
+          "subtitle": "Track requests, conversion, trends"
+        },
+        "teacher": {
+          "alt": "Teacher app",
+          "badge": "Teacher app",
+          "title": "Classes & Communication",
+          "subtitle": "Grades, homework, attendance, messages"
+        },
+        "parent": {
+          "alt": "Parent app",
+          "badge": "Parent app",
+          "title": "Child progress",
+          "subtitle": "Attendance, grades, homework, notifications"
+        },
+        "mobile": {
+          "alt": "Preview"
+        }
+      }
+    },
+    "bookDemo": {
+      "title": "Ready to transform your school?",
+      "subtitle": "Book a free demo and discover how OmniSchool can simplify your school management.",
+      "cta": "Book my free demo",
+      "trust": {
+        "fastResponse": "Response within 24h",
+        "freeDemo": "Free demo",
+        "noCommitment": "No commitment"
+      }
+    },
+    "products": {
+      "title": "Our applications",
+      "admin": {
+        "title": "Admin dashboard",
+        "description": "Manage your entire school from a centralized dashboard. Students, teachers, finance, and scheduling.",
+        "cta": "Explore the dashboard",
+        "imageAlt": "Admin dashboard"
+      },
+      "teacher": {
+        "title": "Teacher app",
+        "description": "Smart attendance, grades, homework and syllabus — everything a teacher needs on mobile.",
+        "cta": "Explore the teacher app",
+        "imageAlt": "Teacher app"
+      },
+      "parent": {
+        "title": "Parent app",
+        "description": "Follow your child's schooling in real time. Grades, absences, and school updates.",
+        "cta": "Explore the parent app",
+        "imageAlt": "Parent app"
+      }
+    }
+  }
+}
